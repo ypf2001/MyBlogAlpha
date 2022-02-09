@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ypf.dao.userMapper">
+    <resultMap id="BaseResultMap" type="com.ypf.pojo.userList">
+        <id column="user_id" jdbcType="INTEGER" property="user_id" />
+        <result column="user_name" jdbcType="VARCHAR" property="user_name" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="hobby" jdbcType="VARCHAR" property="hobby" />
+        <result column="logo" jdbcType="VARCHAR" property="logo" />
+        <result column="sub_quantity" jdbcType="VARCHAR" property="sub_quantity" />
+        <result column="now_path" jdbcType="VARCHAR" property="now_path" />
+        <result column="gender" jdbcType="VARCHAR" property="gender" />
+        <result column="sub_user_id" jdbcType="INTEGER" property="sub_user_id"/>
+        <result column="real_name" jdbcType="INTEGER" property="real_name"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        user_id,user_name, password,email,hobby,logo,sub_quantity,now_path,gender,sub_user_id,real_name, create_time, update_time
+    </sql>
+    <select id="login" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from MyBlog.user where  email = #{email} and password = #{password};
+    </select>
+
+    <insert id="register" parameterType="com.ypf.pojo.userList">
+        insert into myblog.user (user_name,email,password,create_time,update_time) values(#{user_name},#{email},#{password},now(),now())
+    </insert>
+
+
+
+
+
+
+
+</mapper>

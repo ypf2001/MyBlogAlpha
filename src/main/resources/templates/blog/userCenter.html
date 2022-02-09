@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>个人中心</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}"/>
+		<link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap-theme.css}"/>
+		<link type="text/css" rel="styleSheet" th:href="@{/blog/css/userCenter.css}"/>
+
+	</head>
+	<body>
+	<header class="p-3 bg-info text-white">
+		<div class="container">
+			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+				<a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+					<svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+				</a>
+
+				<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+					<li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+					<li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+					<li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+					<li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+					<li><a href="#" class="nav-link px-2 text-white">About</a></li>
+				</ul>
+
+				<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+					<input type="search" class="form-control form-control-dark" placeholder="搜索..." aria-label="Search">
+				</form>
+
+				<div class="text-end">
+					<button type="button"  onclick="window.location.href='/blog/loginUser'" class="btn btn-outline-light me-2">登录</button>
+					<button type="button" onclick="window.location.href='/blog/registerUser'"  class="btn btn-warning">注册</button>
+				</div>
+			</div>
+		</div>
+	</header>
+
+
+
+		<div class="container">
+			<div class="row col-lg-offset-1">
+				<div class="col-lg-2 " style="background-color: aqua;">
+					<div class="nav">
+						<div>
+							<ul class="nav nav-pills nav-stacked" data-toggle="tab">
+								<li class="active">
+									<a href="#write_article" data-toggle="tab">文章发布</a>
+
+								</li>
+								<li>
+									<a href="#my_article" data-toggle="tab">我的博客</a>
+								</li>
+
+								<li>
+									<a href="#my_msg" data-toggle="tab">回复评论</a>
+
+								</li>
+								<li>
+									<a href="#my_collection" data-toggle="tab">我的粉丝</a>
+
+								</li>
+								<li>
+									<a href="#my_fans" data-toggle="tab">我的收藏</a>
+
+								</li>
+								<li>
+									<a href="#my_sub" data-toggle="tab">我的关注</a>
+
+								</li>
+								<li>
+									<a href="#my_data" data-toggle="tab">个人资料</a>
+
+								</li>
+
+							</ul>
+
+						</div>
+
+					</div>
+
+				</div>
+				<div class="tab-content">
+					
+					<div id="write_article" class="col-lg-push-1 col-lg-8 tab-pane fade in active ">
+					<form id="send_article" >
+						<div class="form-group" >
+							<div style="text-align: center;"><p>标题</p>
+							<textarea class="form-control" style="width: 100%;" id="text_title"></textarea>
+							</div>
+							<div id="toolbar-container" class="toolbar"></div>
+							<div id="text-container" class="text"></div>
+							<div class="col-lg-offset-5" >
+								<input id="submit_btn"
+								 class="btn btn-success"
+								 type="button"
+								 value="提交" />
+								</div>
+						</div>
+						
+					</form>
+
+					</div>
+					<div id="my_article" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: aqua;">
+						<div class="media" ><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+						</div>
+					</div>
+
+					<div id="my_msg" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: orange;">
+						<div class="media" ><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+						</div>
+
+					</div>
+					<div id="my_collection" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: bisque;">
+						<div class="media" ><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+						</div>
+
+					</div>
+					<div id="my_fans" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: greenyellow;">
+						<div class="media" ><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+						</div>
+
+					</div>
+					<div id="my_sub" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: red;">
+						<div class="media" ><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+							</div>
+							<div class="media"><p>这是一个信息</p>
+							<span>发布于 2022年1月24日</span>
+						</div>
+
+					</div>
+					<div id="my_data" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: purple;">
+						<div>
+							<ul class="form-group">
+								<li class="">
+									<p>头像</p>									
+								</li>
+								
+								<li class="input-group">
+									 <span class="input-group-addon">用户名</span>
+									 <input id="admin_name" type="text" name="admin_name" class="form-control"/>
+								</li>	
+																		
+								<li class="input-group">
+									<span class="input-group-addon">姓名</span>
+									<input id="real_name" type="text" name="real_name" class="form-control"/>
+								</li>													
+								<li class="input-group">
+									<span class="input-group-addon">性别</span>
+									<input id="gender" name="gender" type="text" class="form-control"/>
+								</li>													
+								<li class="input-group">
+									<span class="input-group-addon">所在地</span>
+									<input id="now_path"  type="text" name="now_path" class="form-control"/>
+								</li>
+								<li class="input-group">
+									<span class="input-group-addon">爱好</span>
+									<input id="hobby" type="text" name="hobby" class="form-control"/>
+								</li>
+							</ul>
+						</div>
+
+					</div>
+					</div>
+				
+			</div>
+		</div>
+
+
+		<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+		<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+		<script th:src="@{/plugin/jquery/jquery.js}"></script>
+		<script th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
+		 
+		<script th:src="@{https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js}"></script>
+		
+<!--			 富文本编辑器 -->
+		 <script type="text/javascript">
+		 	const E = window.wangEditor
+		 	const editor = new E("#toolbar-container", "#text-container")
+		 	// 或者 const editor = new E(document.getElementById('div1'))
+		 	editor.create()
+		 	
+		 	$("#submit_btn").click(
+			
+		 	function(){
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST",
+						"/dataSubmit?article_text="+encodeURI(JSON.stringify(editor.txt.getJSON()) ) +"&article_name="+encodeURI($("#text_title").val()+"&comment_id="+"&summary=")
+						,true);
+					xhr.send(null);
+				xhr.onreadystatechange=function (){
+					console.log()
+					var start_time  , end_time;
+					if(xhr.readyState==1){
+						start_time = new Date().getTime();
+					}
+
+					if(xhr.readyState==4){
+						end_time = new Date().getTime();
+
+					}
+					console.log(end_time-start_time);
+					if(xhr.status!=200){
+
+
+
+						console.log("提交出错")
+
+					}else
+					{
+						console.log($("#text_title").val())
+					}
+				}
+
+		 	
+		 	});
+
+			 // 自定义提交
+
+
+		 </script>
+	</body>
+</html>

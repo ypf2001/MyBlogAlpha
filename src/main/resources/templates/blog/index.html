@@ -1,0 +1,218 @@
+<html lang="en" xml:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的博客</title>
+    <!--    <link href="plugin/bootstrap/bootstrap.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <link type="text/css" rel="styleSheet"  th:href="@{/blog/css/indexStyle.css}"/>-->
+    <link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}"/>
+    <script th:src="@{/plugin/bootstrap/js/bootstrap.bundle.js}"></script>
+
+<!--    <link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap-theme.css}"/>-->
+</head>
+<body style="position: relative">
+<div>
+    <header class="p-3 bg-info text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                    <input type="search" class="form-control form-control-dark" placeholder="搜索..." aria-label="Search">
+                </form>
+
+                <div class="text-end">
+                    <button type="button"  onclick="window.location.href='/blog/loginUser'" class="btn btn-outline-light me-2">登录</button>
+                    <button type="button" onclick="window.location.href='/blog/registerUser'"  class="btn btn-warning">注册</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div data-spy="affix"
+                 class="col-md-2 col-lg-2 col-lg-pull-9 ">
+                <div  id="" class=" navbar  hidden-xs hidden-sm  ">
+
+                    <ul class=" navbar-nav">
+                        <li class="scroll-res nav-item">
+                            <a class="nav-link" href="#div1">链接1</a>
+                        </li>
+                        <li class="scroll-res nav-item">
+                            <a class="nav-link" href="#div2">链接2</a>
+                        </li>
+                        <li class="scroll-res nav-item">
+                            <a class="nav-link" href="#div3">链接3</a>
+                        </li>
+                        <li class="scroll-res nav-item">
+                            <a class="nav-link" href="#div4">链接4</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+<!--            <div id="hidden_div">  </div>-->
+            <div class="
+
+                 col-md-6
+                 col-lg-7
+                 col-sm-8
+                 col-xs-10
+                 pull-left
+                 col-md-push-3
+                 col-lg-pull-1
+                 col-sm-push-0
+                 col-xs-push-1 "
+                 style="position: relative"
+                >
+                <div  class="scroll-head" style="background-color:#ffbeec " id="div1">
+                    <h1 class="page-header">123</h1>
+                </div>
+                <p class="lead">
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                </p>
+                <figure class="highlight">
+                    <pre>
+                        <code class="language-html" data-lang="html">
+                            <span class="nt">&lt;html</span>
+                            <span class="na">lang=</span>
+                            <span class="s">"en"</span>
+                            <span class="nt">&gt;</span>
+                            ...
+                            <span class="nt">&lt;/html&gt;</span>
+                        </code>
+                    </pre>
+
+                </figure>
+                <div class="scroll-head" style="background-color:#baeee0"  id="div2">
+                    <h1 class="page-header">123</h1>
+                </div>
+                <p class="lead">
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                </p>
+                <figure class="highlight">
+                    <pre>
+                        <code class="language-html" data-lang="html">
+                            <span class="nt">&lt;html</span>
+                            <span class="na">lang=</span>
+                            <span class="s">"en"</span>
+                            <span class="nt">&gt;</span>
+                            ...
+                            <span class="nt">&lt;/html&gt;</span>
+                        </code>
+                    </pre>
+
+                </figure>
+                <div class="scroll-head" style="background-color:#ffe87a"  id="div3">
+                    <h2 class="page-header">123</h2>
+                </div>
+                <p class="lead">
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                </p>
+                <figure class="highlight">
+                    <pre>
+                        <code class="language-html" data-lang="html">
+                            <span class="nt">&lt;html</span>
+                            <span class="na">lang=</span>
+                            <span class="s">"en"</span>
+                            <span class="nt">&gt;</span>
+                            ...
+                            <span class="nt">&lt;/html&gt;</span>
+                        </code>
+                    </pre>
+
+                </figure>
+                <div class="scroll-head" style="background-color:#ceb5e5" id="div4">
+                    <h2 class="page-header">123</h2>
+                </div>
+                <p class="lead">
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                    这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；这是一段演示文稿；
+                </p>
+                <figure class="highlight">
+                    <pre>
+                        <code class="language-html" data-lang="html">
+                            <span class="nt">&lt;html</span>
+                            <span class="na">lang=</span>
+                            <span class="s">"en"</span>
+                            <span class="nt">&gt;</span>
+                            ...
+                            <span class="nt">&lt;/html&gt;</span>
+                        </code>
+                    </pre>
+
+                </figure>
+                <div style="height: 100px">
+
+                </div>
+            </div>
+            <div role="side-bar"
+                 class="hidden-xs col-lg-2 col-md-2 col-sm-3 col-lg-push-4 col-md-push-4 col-sm-push-1 col-lg-offset-0 "
+                 style="background-color: #5bc0de;">
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <div role="foot-div" >
+        <div class="">
+            <div  data-spy="affix" data-offset-bottom="0"  style=" height: 100px; width: 100%; background-color: rgba(234,193,193,0.13);  margin: auto ">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/plugin/jquery/jquery.js}"></script>
+<script th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script>
+    $(window).scroll(
+
+        function (){
+            console.log(document.getElementById("div1").clientTop)
+
+
+
+            $(".scroll-head").each(
+                function (event){
+                    //console.log($("this:first").clientY)
+                   // console.log(event.clientY)
+                    if($(this).clientY<10){
+                    }
+                    $(".scroll-res").each(
+                        function (){
+
+                        }
+
+                    )
+
+                }
+            )
+        }
+
+    )
+
+</script>
+</body>
+</html>

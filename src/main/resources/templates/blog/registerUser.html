@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Kodinger">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>My Login Page &mdash; Bootstrap 4 Login Page Snippet</title>
+    <link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}"/>
+    <link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap-theme.css}"/>
+    <link type="text/css" rel="styleSheet" th:href="@{/blog//css/my-login.css}"/>
+</head>
+<body class="my-login-page">
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-md-center h-100">
+            <div class="card-wrapper">
+                <div class="brand">
+                    <img th:src="@{/blog/img/logo.jpg}" alt="登录页面">
+                </div>
+                <div class="card fat">
+                    <div class="card-body">
+                        <h4 class="card-title">注册</h4>
+                        <form method="POST" th:action="@{/blog/register}" class="my-login-validation" novalidate="">
+                            <div class="form-group">
+                                <label for="name">用户名</label>
+                                <input id="name" type="text" class="form-control" name="user_name" required autofocus>
+                                <div class="invalid-feedback">
+                                    你的用户名?
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">邮箱地址</label>
+                                <input id="email" type="email" class="form-control" name="email" required>
+                                <div class="invalid-feedback">
+                                    非法的邮箱地址
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">密码</label>
+                                <input id="password" type="password" class="form-control" name="password" required data-eye>
+                                <div class="invalid-feedback">
+                                    需要密码
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="custom-checkbox custom-control">
+                                    <input type="checkbox" name="agree" id="agree" class="custom-control-input  d-inline-block" required="">
+                                    <label for="agree" class="custom-control-label  ">我同意 <a href="#">团队和协议</a></label>
+                                    <div class="invalid-feedback">
+                                        你必须同意我们的团队协议
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group m-0">
+                                <button type="submit" class="btn btn-primary btn-block offset-5">
+                                    注册
+                                </button>
+                            </div>
+                            <div class="mt-4 text-center">
+                                已经有一个账户? <a href="index.html">登录</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="footer">
+                    Copyright &copy; 2022 &mdash; My personal blog
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script th:src="@{/plugin/popper/popper.js}"></script>
+<script th:src="@{/plugin/jquery/jquery.js}"></script>
+<script th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
+<script th:src="@{/blog/js/my-login.js}"></script>
+<script th:inline="javascript">
+var res = [[${session.register_res}]]
+console.log(res)
+</script>
+</body>
+</html>

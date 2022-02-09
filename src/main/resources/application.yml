@@ -1,0 +1,49 @@
+#服务器端口
+
+server:
+  port: 8081
+  max-http-header-size: 102400
+  tomcat:
+    max-http-form-post-size: 10MB
+#datasourceas
+spring:
+#  devtools:
+#    restart:
+#      enabled: true  #设置开启热部署
+#      additional-paths: src/main/java #重启目录
+#      exclude: WEB-INF/**
+#  freemarker:
+#    cache: false    #页面不加载缓存，修改即时生效
+  datasource:
+    username: root
+    password: 2364555434
+    data-username: root
+    data-password: 2364555434
+    url: jdbc:mysql://localhost:3306/my_blog_db?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: myblog
+
+  hikari:
+    minimum-idle: 5
+    maximum-pool-size: 20
+    auto-commit: true
+    connection-timeout: 30000
+    pool-name: hikariCP
+    max-lifetime: 30000
+    idle-timeout: 30000
+
+
+
+
+#mybatisConfig
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Kodinger">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>My Login Page</title>
+    <link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}"/>
+    <script th:src="@{/plugin/bootstrap/js/bootstrap.bundle.js}"></script>
+    <link type="text/css" rel="styleSheet" th:href="@{/blog/css/my-login.css}"/>
+</head>
+
+<body class="my-login-page">
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-md-center h-100">
+            <div class="card-wrapper">
+                <div class="brand">
+                    <img th:src="@{/blog/img/logo.jpg}" alt="bootstrap 5 login page">
+                </div>
+                <div class="card fat ">
+                    <div class="card-body ">
+                        <h4 class="card-title">登录</h4>
+                        <form method="POST" class="my-login-validation " novalidate="">
+                            <div class="form-group ">
+                                <label for="email">邮箱地址</label>
+                                <input id="email" type="email" class="form-control"  value="" required autofocus>
+                                <div class="invalid-feedback">
+                                    非法的邮箱
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">密码
+                                    <a href="forgot.html" class="float-end">
+                                        忘记密码?
+                                    </a>
+                                </label>
+                                <input id="password" type="password" class="form-control"  required data-eye>
+                                <div class="invalid-feedback">
+                                        需要密码
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="custom-checkbox custom-control">
+<!--                                    <input name="isRemember" type="hidden" value="">-->
+                                    <input type="checkbox" name="" id="remember" value="off"  class="custom-control-input">
+                                    <label for="remember" class="custom-control-label">记住我</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group m-0">
+                                <button id="sub_btn" type="button" style=""  class="btn btn-primary btn-block offset-5">
+                                    确认
+                                </button>
+                            </div>
+                            <div class="mt-4 text-center">
+                                没有账号? <a href="register.html">创建一个</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="footer">
+                    Copyright &copy; 2022 &mdash; My private blog
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script th:src="@{/plugin/popper/popper.js}"></script>
+<script th:src="@{/plugin/jquery/jquery.js}"></script>
+<script th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
+<script th:src="@{/blog/js/my-login.js}"></script>
+<script>
+     token =  localStorage.getItem("token")
+    if(token.length>0||token!=null){
+
+
+
+    }
+
+
+
+
+    window.onload= function (){
+        console.log($("#remember").prop("checked"))
+        if(!$("#remember").prop("checked")){
+            $("#remember").val("off")
+            console.log($("#remember").val())
+        }else
+        {
+
+        }
+
+    }
+    $("#remember").click(
+        function (){
+            if(!$("#remember").prop("checked")){
+                $("#remember").val("off")
+                console.log($("#remember").val())
+            }else
+            {
+                $("#remember").val("on");
+            }
+        }
+
+    )
+
+    $("#sub_btn").click(
+        function (){
+            $("form").attr("action",
+                "/blog/login?email="+$("#email").val()+
+                "&password="+$("#password").val()+
+                "&isRemember="+$("#remember").val());
+            $("form").submit()
+        }
+    )
+
+
+
+</script>
+</body>
+</html>

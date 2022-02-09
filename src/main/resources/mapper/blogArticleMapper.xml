@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ypf.dao.blogArticleMapper">
+    <insert id="saveBlog" parameterType="com.ypf.pojo.blogList">
+        insert into myblog.blog (blog_name,article_quantity,user_id,create_time,update_time) values(#{article_quantity},#{user_id},now(),now())
+    </insert>
+    <insert id="saveArticle" parameterType="com.ypf.pojo.articleList">
+        insert into myblog.article (article_name,article_text,comment_id,summary,create_time,update_time) values(#{article_name},#{article_text},#{comment_id},#{summary},now(),now())
+    </insert>
+
+</mapper>
