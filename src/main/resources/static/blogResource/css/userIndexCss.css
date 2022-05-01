@@ -1,0 +1,214 @@
+.side-bar {
+
+    margin-top: 60px;
+    box-shadow: 0px 0px 5px #888888;
+    text-align: center;
+}
+section{
+    min-width: 780px;
+}
+
+.side-bar ul {
+    position: relative;
+    padding: 0;
+    margin: auto;
+
+
+}
+
+.side-bar ul li {
+    width: 50px;
+    text-align: center;
+    padding-top: 10px;
+    height: 70px;
+    list-style: none;
+    display: inline-block;
+    position: relative;
+
+}
+
+.side-bar ul li img {
+    width: 30px;
+    height: 30px;
+}
+
+.side-bar ul li :hover {
+    cursor: pointer;
+}
+
+.arrowDiv {
+    text-align: center;
+    line-height: 68px;
+    display: none;
+    border-radius: 10px;
+    background-color: #48c293;
+    width: 100px;
+    height: 68px;
+    position: absolute;
+    z-index: 10;
+    left: -25px;
+    top: -70px;
+
+}
+
+.arrowDiv:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border: transparent 10px solid; /*调整小三角形的大小*/
+    border-top-color: #305573; /*改变小三角的颜色（最好就是和父级div的背景颜色相同）;bottom是用于调整小三角的方向*/
+    position: absolute;
+    left: 40px; /*调整小三角形的位置*/
+    bottom: -20px; /*调整小三角形的位置*/
+    margin-top: 20px; /*调整小三角形的位置*/
+}
+
+.tag-font {
+    color: #2e3440;
+}
+
+.bottom-text {
+    padding-top: 3px;
+    position: absolute;
+    left: 10px;
+}
+
+.main-data {
+    margin-top: 60px;
+    box-shadow: 0px 0px 5px #888888;
+    min-width: 350px;
+}
+
+.img-container {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    left: 5%;
+    top: 10px;
+    text-align: center;
+    padding-bottom: 150px;
+
+}
+
+.main-data-body .img-container img {
+    width: 100px;
+    height: 100px;
+}
+
+.main-data-body .sub-btn {
+    float: right;
+}
+
+.main-data-body .summary-content {
+    display: inline-block;
+    width: 50%;
+    position: relative;
+    left: 15%;
+    top: -80px;
+}
+
+.crop-line {
+    width: 100%;
+    height: 1px;
+    box-shadow: 0px 0px 2px #0a001f;
+}
+
+.text-area .index-block {
+    position: relative;
+    top: 5px;
+    width: 100px;
+    height: 38px;
+    text-align: center;
+    line-height: 38px;
+    border-top: #888888 1px solid;
+    border-left: #888888 1px solid;
+    border-right: #888888 1px solid;
+    box-shadow: 0px 0px 3px #0c0c0c;
+
+
+}
+
+.text-list {
+    width: 90%;
+    margin: auto;
+}
+
+.text-list-item {
+    margin: 10px auto;
+    height: 150px;
+
+
+}
+
+@font-face {
+    font-family: "text_name_font" ;
+    src: url("/blogResourcentCss/No.122-ShangShouYunRunTi-2.ttf");
+}
+
+@font-face {
+
+    font-family: text_body_font;
+    src: url("/blogResourcentCss/No.104-ShangShouHongZhiShouXieTi-2.ttf");
+}
+
+.text-list label {
+    font-family: text_name_font;
+    font-size: 20px;
+    font-weight: bolder;
+    color: rgba(218, 101, 54, 0.69);
+
+
+}
+
+.text-list p {
+    font-family: text_body_font;
+    font-size: 18px;
+    font-weight: bold;
+    height: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;//控制显示行数
+}
+.text-list p:hover{
+    cursor: pointer;
+    color: #0a53be;
+}
+.non-article-style{
+    height: 200px;
+    line-height: 200px;
+    font-family: 华文中宋;
+    color: #888888;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+}
+.label-time{
+    font-size: 10px;
+    font-family: 'Open Sans Light', sans-serif;
+    float: right;
+    color: #888888;
+    margin-right: 10px;
+}
+.sub-btn{
+    margin-top: 20px;
+    margin-right: 10px;
+    float: right;
+}
+.sub-btn img{
+    width: 40px;
+    height: 40px;
+}
+.sub-btn img:hover{
+    cursor: pointer;
+    filter: drop-shadow(1px 1px #f000ff);
+}
+/*.text-area :hover{*/
+/*    background-color: #fc7769;*/
+/*    color: #0a58ca;*/
+
+/*    cursor: pointer;*/
+/*}*/

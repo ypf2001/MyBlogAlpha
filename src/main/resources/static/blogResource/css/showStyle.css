@@ -1,0 +1,151 @@
+body{
+}
+.mainBody{
+    margin-top: 5%;
+    font-family: "文章显示字体";
+}
+pre {
+    width: 100%;
+    padding: .5rem;
+    border: 1px solid #d0e579;
+    margin: 1rem auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+
+}
+pre ol{
+    list-style: none;
+    padding-left: 0px;
+
+}
+p{
+    word-break: break-word;
+}
+.katex{
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.comment_item{
+    height: 180px;
+    margin: 20px;
+    background-color: #ffffff
+}
+.comment_text{
+    overflow: auto;
+    text-indent: 20px;
+    height: 100px;
+    overflow: hidden;
+    font-family: 华文彩云;
+    text-overflow: ellipsis;
+}
+.comment-header a{
+    text-decoration: none;
+    color: #2e3440;
+}
+.leftArticleBody{
+    box-shadow: 0px 1px 0px 1px;
+}
+.emoji-collect{
+    margin-top: 10%;
+    list-style: none;
+
+}
+.emoji-collect li img{
+    width: 20%;
+
+    position: relative;
+    display: inline;
+
+}
+.collect img:hover{
+    cursor: pointer;
+    content: url("/blogResourcegeIcon/collected.png");
+    width: 20%;
+}
+.collected img:hover{
+    cursor: pointer;
+    content: url("/blogResourcegeIcon/collect.png");
+    width: 20%;
+}
+.side-bar .user-logo{
+
+    width: 80%;
+    margin-left: 10%;
+    cursor: pointer;
+}
+.side-bar p{
+    text-align: center;
+}
+.praiseIcon
+{
+    cursor: pointer;
+}
+.praiseIcon:active{
+    content: url("/blogResourcegeIcon/praiseAfter.png");
+}
+.emoji-icon{
+    margin-top: 10%;
+    list-style: none;
+}
+.emoji-icon li{
+    position: relative;;
+    display: inline;
+    cursor: pointer;
+}
+.emoji-icon li img{
+position: relative;
+    width: 20%;
+}
+.emoji-icon li img:hover{
+  top: -5px
+}
+@font-face {
+    font-family: "文章显示字体";
+    src: url("/blogResourcentCss/WenYue-ShengHuoJiaTi-J-2.otf");
+}
+.dialog{
+    background-color: rgb(255, 238, 238);
+    width: 20%;
+    height: 100px;
+    border-radius: 5px;
+    z-index: 10;/*优先*/
+    text-align: center;
+    /* 实现对浏览器窗口的垂直居中 */
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+/* 弹出框的提示文字部分 */
+.header{
+    height: 60%;
+    line-height: 60px;
+    margin: 0 auto;
+}
+/* 弹出框的两个按钮部分 */
+.footer{
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+}
+/* 取消和确认按钮的设置 */
+.confirm,.cancel{
+    outline: none;
+    width: 50%;
+    background-color: white;
+}
+.confirm{
+    border-width: 1px 0px 0px 1px;
+    border-bottom-right-radius:5px;
+}
+.cancel{
+    border-width: 1px 0px 0px 0px;
+    border-bottom-left-radius:5px;
+}
+.improve-msg{
+    float: right;
+    color: #888888;
+    margin-right: 12px;
+    font-size: 12px;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div style="background-color: red ;width: 80%;margin: auto;" th:fragment="rightBody">
+        <div class="article_preview" th:each="item:${articleMsg}">
+            <a  th:href="${'/blog/showArticle/'+item.articleCollections.get(0).getArticle_id()}"  >
+                <div class="list-item">
+                    <p class="main-content" th:text="${item.articleCollections.get(0).getSummary() }">
+                    </p>
+                    <div class="time-frame">
+                        <span th:text="${item.articleCollections.get(0).getCreate_time()}"></span>
+                        <span th:text="${item.articleCollections.get(0).getUpdate_time()}"></span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</body>
+</html>
