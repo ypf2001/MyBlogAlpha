@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "cropperjs": "^1.5.12",
+    "jcrop": "^3.0.1"
+  }
+}

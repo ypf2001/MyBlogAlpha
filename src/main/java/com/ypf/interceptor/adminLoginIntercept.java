@@ -11,7 +11,7 @@ public class adminLoginIntercept implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
             String requestPath =request.getServletPath();
-            if(requestPath.startsWith("/admin")&& null== request.getSession().getAttribute("user_name")){
+            if(requestPath.startsWith("/admin")&& null== request.getSession().getAttribute("admin_name")){
             request.getSession().setAttribute("errorMessage","登录已过期！");
             response.sendRedirect(request.getContextPath()+"/admin/login");
             return  false;

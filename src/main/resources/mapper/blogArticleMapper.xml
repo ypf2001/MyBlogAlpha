@@ -4,11 +4,92 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ypf.dao.blogArticleMapper">
-    <insert id="saveBlog" parameterType="com.ypf.pojo.blogList">
+    <resultMap id="BaseResultMap" type="com.ypf.entity.blogEntity">
+        <id column="blog_id" jdbcType="INTEGER" property="blog_id" />
+        <result column="blog_name" jdbcType="VARCHAR"  property="blog_name"/>
+        <result column="user_id" jdbcType="INTEGER" property="user_id"/>
+        <result column="summary"  jdbcType="VARCHAR" property="summary" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="create_time"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="update_time"/>
+    </resultMap>
+    <resultMap id="Blog_Article_Map" type="com.ypf.entity.blogEntity">
+        <id column="bname" property="blog_name"/>
+        <collection property="articleCollections" javaType="list" ofType="com.ypf.entity.articleEntity" >
+            <id column="aid" jdbcType="INTEGER" property="article_id"/>
+            <result column="aname" jdbcType="VARCHAR" property="article_name"/>
+            <result column="cid" jdbcType="INTEGER" property="comment_id"/>
+            <result column="summary" jdbcType="VARCHAR" property="summary"/>
+            <result column="uid" jdbcType="INTEGER" property="user_id"/>
+            <result column="bid" jdbcType="INTEGER" property="blog_id"/>
+            <result column="ctime" jdbcType="TIMESTAMP" property="create_time"/>
+            <result column="utime" jdbcType="TIMESTAMP" property="update_time"/>
+        </collection>
+    </resultMap>
+    <resultMap id="Blog_Article_List" type="com.ypf.entity.blogEntity">
+        <collection property="articleList" javaType="list" ofType="com.ypf.entity.articleEntity" >
+            <result column="atext" jdbcType="VARCHAR" property="article_text"/>
+        </collection>
+    </resultMap>
+    <resultMap id="User_Comment_List" type="com.ypf.entity.commentEntity">
+        <result property= "comment_id" jdbcType="INTEGER" column="c_id"/>
+        <result property= "comment_text" jdbcType="VARCHAR" column="c_text"/>
+        <result property= "user_id" jdbcType="INTEGER" column="c_u_id"/>
+        <result property= "create_time" jdbcType="TIMESTAMP" column="c_ctime"/>
+        <result property= "praise" jdbcType="INTEGER" column="c_praise"/>
+        <result property= "reduce" jdbcType="INTEGER" column="c_reduce"/>
+        <collection property="userList" javaType="list" ofType="com.ypf.entity.userEntity">
+            <result property= "user_name" jdbcType="VARCHAR" column="u_name"/>
+            <result property= "logo" jdbcType="VARCHAR" column="u_logo"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Blog_Column">
+        blog_id,blog_name,user_id,summary,create_time,update_time
+    </sql>
+    <sql id="Base_Article_Column">
+        article_id,article_name,article_text,comment_id,summary,create_time,update_time,user_id,blog_id
+    </sql>
+
+    <select id="getBlog" parameterType="string"  resultMap="BaseResultMap">
+        select <include refid="Base_Blog_Column"></include> from myblog.blog where user_id = #{user_id}
+    </select>
+    <insert id="saveBlog" parameterType="com.ypf.entity.blogEntity">
         insert into myblog.blog (blog_name,article_quantity,user_id,create_time,update_time) values(#{article_quantity},#{user_id},now(),now())
     </insert>
-    <insert id="saveArticle" parameterType="com.ypf.pojo.articleList">
-        insert into myblog.article (article_name,article_text,comment_id,summary,create_time,update_time) values(#{article_name},#{article_text},#{comment_id},#{summary},now(),now())
+    <insert id="saveArticle" parameterType="com.ypf.entity.articleEntity">
+        insert into myblog.article (article_name,article_text,summary,create_time,update_time,user_id,blog_id) values(#{article_name},#{article_text},#{summary},now(),now(),#{user_id},#{blog_id})
     </insert>
+    <insert id="createBlog" parameterType="com.ypf.entity.blogEntity">
+        insert into myblog.blog (blog_name,article_quantity,user_id,summary,create_time,update_time) values(#{blog_name},#{article_quantity},#{user_id},#{summary},now(),now())
+    </insert>
+    <select id="findArticleMsg"   resultMap="Blog_Article_Map">
+        select b.blog_name bname,
+               a.article_id aid,a.article_name aname,a.comment_id cid,
+               a.summary summary, a.user_id uid,
+               a.blog_id bid,a.create_time ctime,a.update_time utime from myblog.article a ,myblog.blog b where a.blog_id = #{blog_id} and  a.blog_id = b.blog_id
+                ORDER BY a.article_id desc
+               LIMIT #{pageIndex},4
 
+    </select>
+    <select id="getArticle" parameterType="string" resultMap="Blog_Article_List">
+        select   a.article_text atext from myblog.article a where a.blog_id = #{blog_id}
+    </select>
+    <select id="getArticleById" parameterType="string" resultType="com.ypf.entity.articleEntity">
+        select a.article_text ,a.article_name from myblog.article a where a.article_id=#{article_id}
+    </select>
+    <insert id="addComment" parameterType="string">
+        insert into myblog.comment (comment_text,user_id,article_id,create_time,update_time,user_name,praise,reduce) values(#{comment_text} ,#{user_id},#{article_id},now(),now(),#{user_name},0,0)
+    </insert>
+    <select id="getCommentByArticleId" parameterType="string" resultMap="User_Comment_List">
+        select  c.comment_id c_id, c.comment_text c_text,c.user_id c_u_id,c.create_time c_ctime, c.praise c_praise,c.reduce c_reduce,u.user_name u_name,u.logo u_logo from
+        myblog.comment c ,myblog.user u where c.article_id =#{article_id}
+    </select>
+    <update id="subPraise" parameterType="string">
+        update myblog.Comment c set c.praise = #{praise} where c.comment_id = #{comment_id}
+    </update>
+    <select id="getArticleNum" parameterType="string" resultType="int">
+        select COUNT(a.user_id) from article a where a.blog_id  = #{blog_id}
+    </select>
+    <update id="updateArticle" parameterType="string">
+        update myblog.article a set a.article_text = #{article_text},  a.article_name = #{article_name}, a.summary = #{summary} where a.article_id = #{article_id}
+    </update>
 </mapper>

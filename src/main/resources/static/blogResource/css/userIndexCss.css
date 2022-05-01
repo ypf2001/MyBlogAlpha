@@ -142,13 +142,13 @@ section{
 
 @font-face {
     font-family: "text_name_font" ;
-    src: url("/blogResourcentCss/No.122-ShangShouYunRunTi-2.ttf");
+    src: url("/static/blogResource/css/fontCss/No.122-ShangShouYunRunTi-2.ttf");
 }
 
 @font-face {
 
     font-family: text_body_font;
-    src: url("/blogResourcentCss/No.104-ShangShouHongZhiShouXieTi-2.ttf");
+    src: url("/static/blogResource/css/fontCss/No.104-ShangShouHongZhiShouXieTi-2.ttf");
 }
 
 .text-list label {

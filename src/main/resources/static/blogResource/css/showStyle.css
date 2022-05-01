@@ -60,12 +60,12 @@ p{
 }
 .collect img:hover{
     cursor: pointer;
-    content: url("/blogResourcegeIcon/collected.png");
+    content: url("/static/blogResource/img/pageIcon/collected.png");
     width: 20%;
 }
 .collected img:hover{
     cursor: pointer;
-    content: url("/blogResourcegeIcon/collect.png");
+    content: url("/static/blogResource/img/pageIcon/collect.png");
     width: 20%;
 }
 .side-bar .user-logo{
@@ -82,7 +82,7 @@ p{
     cursor: pointer;
 }
 .praiseIcon:active{
-    content: url("/blogResourcegeIcon/praiseAfter.png");
+    content: url("/static/blogResource/img/pageIcon/praiseAfter.png");
 }
 .emoji-icon{
     margin-top: 10%;
@@ -102,7 +102,7 @@ position: relative;
 }
 @font-face {
     font-family: "文章显示字体";
-    src: url("/blogResourcentCss/WenYue-ShengHuoJiaTi-J-2.otf");
+    src: url("/static/blogResource/css/fontCss/WenYue-ShengHuoJiaTi-J-2.otf");
 }
 .dialog{
     background-color: rgb(255, 238, 238);

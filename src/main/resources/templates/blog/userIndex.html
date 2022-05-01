@@ -1,10 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title th:text="${UserBlogArticle.get(0).getUserBlog().getBlog_name()+'的个人空间'}"></title>
+    <link type="text/css" rel="styleSheet" th:href="@{/static/plugin/bootstrap/css/bootstrap.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/static/blogResource/css/header-style.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/static/blogResource/css/userIndexCss.css}"/>
+
 </head>
 <body>
-$END$
+<div id="head-append" th:if="${session.user!= 'null'&&session.user!=null }">
+    <div th:insert="frag/header::logo-div">
+    </div>
+</div>
+<section class="container row m-auto">
+    <div class="side-bar d-lg-block d-md-block  d-none col-lg-4 col-md-4 col-xl-3 col-5">
+        <div class="">
+            <h3 style="text-align: center">荣誉墙</h3>
+            <ul class="col-8">
+                <li>
+                    <div class="arrowDiv">
+                        <span class="tag-font">订阅数</span>
+                    </div>
+                    <img th:src="@{/static/blogResource/img/pageIcon/addsub.png}" alt="sub_num">
+                    <div class="bottom-text"><span>100</span></div>
+                </li>
+                <li>
+                    <div class="arrowDiv">
+                        <span class="tag-font">浏览数</span>
+                    </div>
+                    <img th:src="@{/static/blogResource/img/pageIcon/views.png}" alt="view_num">
+                    <div class="bottom-text"><span>100</span></div>
+                </li>
+                <li>
+                    <div class="arrowDiv">
+                        <span class="tag-font">评论数</span>
+                    </div>
+                    <img th:src="@{/static/blogResource/img/pageIcon/join_comment.png}" alt="comment">
+                    <div class="bottom-text"><span>100</span></div>
+                </li>
+                <li>
+                    <div class="arrowDiv">
+                        <span class="tag-font">被查看数</span>
+                    </div>
+                    <img th:src="@{/static/blogResource/img/pageIcon/watched.png}" alt="watched">
+                    <div class="bottom-text"><span>100</span></div>
+                </li>
+                <li>
+                    <div class="arrowDiv">
+                        <span class="tag-font">文章数</span>
+                    </div>
+                    <img th:src="@{/static/blogResource/img/pageIcon/article_num.png}" alt="article_num">
+                    <div class="bottom-text"><span>100</span></div>
+                </li>
+                <li>
+                    <div class="arrowDiv">
+                        <span class="tag-font">活跃度</span>
+                    </div>
+                    <img th:src="@{/static/blogResource/img/pageIcon/watch_num.png}" alt="watch_num">
+                    <div class="bottom-text"><span>100</span></div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="">
+
+        </div>
+    </div>
+    <div class="main-data col-sm-10 col-lg-7 col-md-7  col-xl-8 col-10 offset-lg-1 col-10  offset-md-1 ">
+        <div class="main-data-body">
+            <div class="img-response img-container">
+                <img th:src="${'/blog/images/'+T(com.ypf.utils.stringUtils).jsonToMap(UserBlogArticle.get(0).getLogo()).get('canvas')}" alt="user_index_logo">
+                <span id="sub_id" style="display: none" th:text="${UserBlogArticle.get(0).getUser_id()}"></span>
+                <label for=""></label>
+                <span th:text="${UserBlogArticle.get(0).getUser_name()}">name</span>
+            </div>
+
+            <div class="summary-content">
+                <p th:text="${UserBlogArticle.get(0).getUserBlog().getSummary()}"></p>
+            </div>
+            <div class="sub-btn" th:if="${session.user.getUser_id()!=UserBlogArticle.get(0).getUser_id()}">
+                <div th:if="${isSub}">
+                    <img th:src="@{/static/blogResource/img/pageIcon/alSub.png}" alt="subscribe">
+                </div>
+                <div th:unless="${isSub}">
+                    <img th:src="@{/static/blogResource/img/pageIcon/addSub.png}" alt="subscribe">
+                </div>
+                <div>
+                </div>
+            </div>
+            <div class="sub-btn" th:unless="${session.user.getUser_id()==UserBlogArticle.get(0).getUser_id()}">
+
+            </div>
+        </div>
+        <div class="crop-line"></div>
+        <div class="text-area">
+            <div class="d-inline-block index-block">
+                <label for="">文章</label>
+            </div>
+            <div class="text-list" th:each="item:${UserBlogArticle}">
+                <div th:if="${item.getArticleMsgList().size()==0}">
+                    <div  class="non-article-style text-center justify-content-center">
+                    <span >空空如也</span>
+                    </div>
+                </div>
+                <div th:unless="${item.getArticleMsgList().size()==0}">
+                    <div class="text-list-item">
+                        <label th:text="${item.getArticleMsgList().get(0).getArticle_name()}"></label>
+                        <p th:text="${T(com.ypf.utils.deflaterUtils).unzipString(item.getArticleMsgList().get(0).getSummary())+'...'}"></p>
+                        <div class="label-time"><span>发布时间:&nbsp;</span>
+                            <span th:text="${item.getArticleMsgList().get(0).getCreate_time()}"></span></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div></div>
+</section>
+
+<!--引入脚本-->
+<script th:src="@{/static/plugin/jquery/jquery.js}"></script>
+<script th:src="@{/static/plugin/bootstrap/js/bootstrap.js}"></script>
+<script th:src="@{/static/static/blogResource/js/divAnimate.js}"></script>
+<script>
+
+    $( function  () {
+        let trigger;
+        $(".side-bar li img").hover(
+            function () {
+                const _this = $(this);
+                trigger = setTimeout(
+                    function (){
+                       _this.prev(".arrowDiv").fadeIn(500)
+                    }
+                )
+
+            }
+            , function  () {
+                clearTimeout(trigger)
+                $(this).prev(".arrowDiv").stop(true, true).fadeOut(200)
+            }
+        )
+
+    })
+    $(".sub-btn img").click(
+        function () {
+            $.ajax({
+                method:"post",
+                url:"/subHandle",
+                data:{
+                    "sub_id":$("#sub_id").text(),
+                },
+                beforeSend:function (){
+                    $(".sub-btn img").css("content","url('/blog/img/pageIcon/VAyR.gif')");
+                },
+                success:function (data){
+                    console.log(data["msg"])
+                    if(data["msg"]){
+                        $(".sub-btn img").css("content","url('/static/blogResource/img/pageIcon/alSub.png')");
+                    }
+                    else{
+                        $(".sub-btn img").css("content","url('/static/blogResource/img/pageIcon/addSub.png')");
+                    }
+                },
+                dataType:'json',
+                returnType:"json",
+
+            })
+        }
+    )
+</script>
 </body>
 </html>

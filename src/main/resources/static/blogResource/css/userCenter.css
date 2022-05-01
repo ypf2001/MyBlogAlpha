@@ -1,5 +1,5 @@
 body{
-	background-image: url("/blogResourcedyBackground.jpg") ;
+	background-image: url("/static/blogResource/img/bodyBackground.jpg") ;
 	-moz-background-size:100%;
 	background-size:100% ;
 }
@@ -39,7 +39,7 @@ border-radius: 10px;
 
 }
 .main-body{
-	background-image: url("/blogResource65b96166844a4ca83c2f4ff6eeb002.jpg") ;
+	background-image: url("/static/blogResource/img/a465b96166844a4ca83c2f4ff6eeb002.jpg") ;
 	background-repeat: no-repeat;
 	-moz-background-size:100%;
 	background-size:100% ;
@@ -87,11 +87,20 @@ select{
 	border-top: #20c997 dashed 1px;
 }
 .main-content{
-	height: 80px;
+	height: 80%;
 	text-overflow: ellipsis;
 	font-size: 13px;
 	overflow:hidden ;
 	text-overflow: ellipsis;
+	display: -moz-box;  /* 必须结合的属性 ，将对象作为弹性伸缩盒子模型显示 */
+	display: -webkit-box;
+	-moz-box-orient: vertical;/* 必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式 */
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+}
+.list-item{
+	height: 80%;
+	text-indent: 2em;
 }
 .time-frame{
 	font-size: 10px;
@@ -99,19 +108,10 @@ select{
 .article-list-style{
 	margin-top: 20px;
 }
-.article-list-style .list-item{
-
-
-
-}
-#my_data{
-
-}
 .article-list-style .main-content{
-	color: #376d8c;
+	color: #0077ff;
 	font-weight: bold;
 	font-size: 18px;
-	text-shadow: 1px 1px 5px #2200fd;
 	font-family: text_body_font;
 }
 .article-list-style .main-content:hover{
@@ -123,12 +123,7 @@ select{
 	color: #706f6f;
 	font-weight: bold;
 }
-.article-list-style .time-frame{
 
-}
-.article_preview {
-
-}
 .user-logo{
 	border: solid 4px #b6aeff;
 }
@@ -140,19 +135,19 @@ select{
 }
 @font-face {
 	font-family: "text_name_font" ;
-	src: url("/blogResourcentCss/No.122-ShangShouYunRunTi-2.ttf");
+	src: url("/static/blogResource/css/fontCss/No.122-ShangShouYunRunTi-2.ttf");
 }
 
 @font-face {
 
 	font-family: text_body_font;
-	src: url("/blogResourcentCss/No.104-ShangShouHongZhiShouXieTi-2.ttf");
+	src: url("/static/blogResource/css/fontCss/No.104-ShangShouHongZhiShouXieTi-2.ttf");
 }
 @font-face {
 	font-family:"sidebar-font" ;
-	src: url("/blogResourcentCss/ZiXinFangMengHuanGeTeTi-2.ttf");
+	src: url("/static/blogResource/css/fontCss/ZiXinFangMengHuanGeTeTi-2.ttf");
 }
 @font-face {
 	font-family: "text-font-css";
-	src: url("/blogResourcentCss/ZiXinFangMaoDeTianKongZhiCheng-TeBieDingZhiBan-2.ttf");
+	src: url("/static/blogResource/css/fontCss/ZiXinFangMaoDeTianKongZhiCheng-TeBieDingZhiBan-2.ttf");
 }

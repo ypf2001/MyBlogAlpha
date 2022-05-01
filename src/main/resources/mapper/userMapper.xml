@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ypf.dao.userMapper">
-    <resultMap id="BaseResultMap" type="com.ypf.pojo.userList">
+    <resultMap id="BaseResultMap" type="com.ypf.entity.userEntity">
         <id column="user_id" jdbcType="INTEGER" property="user_id" />
         <result column="user_name" jdbcType="VARCHAR" property="user_name" />
         <result column="password" jdbcType="VARCHAR" property="password" />
@@ -12,29 +12,65 @@
         <result column="logo" jdbcType="VARCHAR" property="logo" />
         <result column="sub_quantity" jdbcType="VARCHAR" property="sub_quantity" />
         <result column="now_path" jdbcType="VARCHAR" property="now_path" />
-        <result column="gender" jdbcType="VARCHAR" property="gender" />
+        <result column="gender" jdbcType="INTEGER" property="gender" />
         <result column="sub_user_id" jdbcType="INTEGER" property="sub_user_id"/>
         <result column="real_name" jdbcType="INTEGER" property="real_name"/>
+        <result column="school" jdbcType="VARCHAR" property="school" />
         <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
         <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
     </resultMap>
+    <resultMap id="User_Article_Blog" type="com.ypf.entity.userEntity">
+        <result column="userName" property="user_name"/>
+        <result column="userId" property="user_id"/>
+        <result column="userLogo" property="logo"/>
+        <association property="userBlog" javaType="com.ypf.entity.blogEntity">
+            <result property="summary" column="blogSummary"/>
+            <result property="blog_name" column="blogName"/>
+        </association>
+        <collection property="articleMsgList" ofType="com.ypf.entity.articleEntity" javaType="list">
+             <result column="articleId" property="article_id"/>
+            <result column="articleSummary" jdbcType="VARCHAR" property="summary"/>
+            <result column="articleName" jdbcType="VARCHAR" property="article_name"/>
+            <result column="articleCreateTime" property="create_time"/>
+        </collection>
+
+    </resultMap>
     <sql id="Base_Column_List">
-        user_id,user_name, password,email,hobby,logo,sub_quantity,now_path,gender,sub_user_id,real_name, create_time, update_time
+        user_id,user_name, password,email,hobby,logo,sub_quantity,now_path,gender,sub_user_id,real_name, create_time, update_time,school
     </sql>
     <select id="login" parameterType="string" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"></include>
-        from MyBlog.user where  email = #{email} and password = #{password};
+        from myblog.user where  email = #{email} and password = #{password};
     </select>
 
-    <insert id="register" parameterType="com.ypf.pojo.userList">
-        insert into myblog.user (user_name,email,password,create_time,update_time) values(#{user_name},#{email},#{password},now(),now())
+    <insert id="register" parameterType="com.ypf.entity.userEntity">
+        insert into myblog.user (user_name,email,password,create_time,
+        update_time,logo) values(#{user_name},#{email},#{password},now(),now(),'defaultImage')
     </insert>
+    <update id="updateLogo" parameterType="com.ypf.entity.userEntity">
+        update  myblog.user u set u.logo = #{logo} where u.user_id = #{user_id}
+    </update>
 
-
-
-
-
-
+    <select id="getUserBlogArticle" resultMap="User_Article_Blog">
+        SELECT  user.user_name userName,
+               user.user_id userId,
+               user.logo userLogo,
+               blog.summary blogSummary,
+                blog.blog_name blogName,
+               article.article_name articleName ,
+                article.article_id articleId,
+                article.summary articleSummary,
+               article.create_time articleCreateTime
+                FROM myblog.`user` user
+              left  join myblog.blog blog
+                on blog.user_id = user.user_id
+              left  join myblog.article  article
+                on article.blog_id = blog.blog_id
+                where `user`.user_id =#{user_id}
+    </select>
+    <select id="getUserById" parameterType="string" resultType="com.ypf.entity.userEntity">
+        select <include refid="Base_Column_List"></include> from user where user_id=#{user_id}
+    </select>
 
 </mapper>

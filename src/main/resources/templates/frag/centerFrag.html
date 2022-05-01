@@ -6,20 +6,25 @@
 </head>
 <body>
 
-    <div style="background-color: red ;width: 80%;margin: auto;" th:fragment="rightBody">
-        <div class="article_preview" th:each="item:${articleMsg}">
-            <a  th:href="${'/blog/showArticle/'+item.articleCollections.get(0).getArticle_id()}"  >
-                <div class="list-item">
-                    <p class="main-content" th:text="${item.articleCollections.get(0).getSummary() }">
-                    </p>
-                    <div class="time-frame">
-                        <span th:text="${item.articleCollections.get(0).getCreate_time()}"></span>
-                        <span th:text="${item.articleCollections.get(0).getUpdate_time()}"></span>
+    <div th:id="rightBody"  th:fragment="rightBody">
+        <div th:if="${articleMsg!=null}">
+            <div class="article_preview" th:each="item:${articleMsg.get(0).getArticleCollections()}">
+                <a  th:href="${'/blog/showArticle/'+item.getArticle_id()}"  >
+                    <div class="list-item">
+                        <p class="main-content" th:text="${item.getSummary()+'...' }">
+                        </p>
+                        <div class="time-frame">
+                            <span > 发布时间:&nbsp;</span>
+                            <span th:text="${item.getCreate_time()}"></span>
+                            <span th:text="${item.getUpdate_time()}"></span>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+
+            </div>
 
         </div>
+
     </div>
 </body>
 </html>

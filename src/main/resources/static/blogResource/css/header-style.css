@@ -85,7 +85,7 @@ header{
 }
 @font-face {
         font-family:"header-font-style" ;
-             src: url("/blogResourcentCss/YouSheBiaoTiYuan-2.otf");
+             src: url("/static/blogResource/css/fontCss/YouSheBiaoTiYuan-2.otf");
 }
 
 /*.float-div{*/

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}"/>
-    <link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap-theme.css}"/>
+    <link type="text/css" rel="styleSheet" th:href="@{/static/plugin/bootstrap/css/bootstrap.css}"/>
+    <link type="text/css" rel="styleSheet" th:href="@{/static/plugin/bootstrap/css/bootstrap-theme.css}"/>
 </head>
 <body>
 <header class="p-3 bg-info text-white">
@@ -27,13 +27,13 @@
             </form>
 
             <div class="text-end">
-                <button type="button"  onclick="window.location.href='/blog/loginUser'" class="btn btn-outline-light me-2">登录</button>
-                <button type="button" onclick="window.location.href='/blog/registerUser'"  class="btn btn-warning">注册</button>
+                <button type="button" onclick="window.location.href='../../static/blogResource/loginUser'" class="btn btn-outline-light me-2">登录</button>
+                <button type="button" onclick="window.location.href='../../static/blogResource/registerUser'" class="btn btn-warning">注册</button>
             </div>
         </div>
     </div>
 </header>
-<script th:src="@{/plugin/jquery/jquery.js}"></script>
-<script th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
+<script th:src="@{/static/plugin/jquery/jquery.js}"></script>
+<script th:src="@{/static/plugin/bootstrap/js/bootstrap.js}"></script>
 </body>
 </html>

@@ -1,273 +1,493 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title>个人中心</title>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}"/>
-		<link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap-theme.css}"/>
-		<link type="text/css" rel="styleSheet" th:href="@{/blog/css/userCenter.css}"/>
+<head>
+    <meta charset="utf-8"/>
+    <title>个人中心</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="styleSheet" th:href="@{/static/plugin/bootstrap/css/bootstrap.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/static/plugin/cropper/cropper.css}">
+    <link type="text/css" rel="styleSheet" th:href="@{/static/blogResource/css/userCenter.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/static/blogResource/css/header-style.css}"/>
+</head>
+<body>
+<!--模态框-->
+<div class="modal" id="logo-modal"style="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">编辑</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- 模态框内容 -->
+            <div class=" row container modal-body">
+                <!--&lt;!&ndash; 加载头像-->
+                <div class="col-6">
+                    <img id="target" style="max-width: 100% ;z-index: 0" class="img-fluid "
+                         th:src="${'/blog/images/'+session.userLogo.get('mainBody')}">
+                </div>
+                <div class="col-5 offset-3 clone-img"
+                     style="width: 111px;height:111px; overflow: hidden"></div>
+                <div id="test"></div>
+            </div>
+            <!-- 模态框底部 -->
+            <div class="modal-footer justify-content-center ">
+                <input id="upload"
+                       value="" type="file" style="margin-right: auto; opacity: 0;
+                                                   margin-left: -320px" class=" "></input>
+                <button id="upload_btn" style="margin-right: auto;" type="button"
+                        class="btn btn-success">上传
+                </button>
+                <button id="canvas_sub" type="button" class="btn btn-success" data-bs-dismiss="modal">提交</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭
+                </button>
+            </div>
 
-	</head>
-	<body>
-	<header class="p-3 bg-info text-white">
-		<div class="container">
-			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-				<a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-					<svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-				</a>
+        </div>
+    </div>
+</div>
+<div id="head-append" th:if="${session.user.getUser_name() != '' }">
 
-				<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-					<li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-					<li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-					<li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-					<li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-					<li><a href="#" class="nav-link px-2 text-white">About</a></li>
-				</ul>
+    <div class="article-list" th:insert="frag/header::logo-div">
 
-				<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-					<input type="search" class="form-control form-control-dark" placeholder="搜索..." aria-label="Search">
-				</form>
+    </div>
 
-				<div class="text-end">
-					<button type="button"  onclick="window.location.href='/blog/loginUser'" class="btn btn-outline-light me-2">登录</button>
-					<button type="button" onclick="window.location.href='/blog/registerUser'"  class="btn btn-warning">注册</button>
-				</div>
-			</div>
-		</div>
-	</header>
-
-
-
-		<div class="container">
-			<div class="row col-lg-offset-1">
-				<div class="col-lg-2 " style="background-color: aqua;">
-					<div class="nav">
-						<div>
-							<ul class="nav nav-pills nav-stacked" data-toggle="tab">
-								<li class="active">
-									<a href="#write_article" data-toggle="tab">文章发布</a>
-
-								</li>
-								<li>
-									<a href="#my_article" data-toggle="tab">我的博客</a>
-								</li>
-
-								<li>
-									<a href="#my_msg" data-toggle="tab">回复评论</a>
-
-								</li>
-								<li>
-									<a href="#my_collection" data-toggle="tab">我的粉丝</a>
-
-								</li>
-								<li>
-									<a href="#my_fans" data-toggle="tab">我的收藏</a>
-
-								</li>
-								<li>
-									<a href="#my_sub" data-toggle="tab">我的关注</a>
-
-								</li>
-								<li>
-									<a href="#my_data" data-toggle="tab">个人资料</a>
-
-								</li>
-
-							</ul>
-
-						</div>
-
-					</div>
-
-				</div>
-				<div class="tab-content">
-					
-					<div id="write_article" class="col-lg-push-1 col-lg-8 tab-pane fade in active ">
-					<form id="send_article" >
-						<div class="form-group" >
-							<div style="text-align: center;"><p>标题</p>
-							<textarea class="form-control" style="width: 100%;" id="text_title"></textarea>
-							</div>
-							<div id="toolbar-container" class="toolbar"></div>
-							<div id="text-container" class="text"></div>
-							<div class="col-lg-offset-5" >
-								<input id="submit_btn"
-								 class="btn btn-success"
-								 type="button"
-								 value="提交" />
-								</div>
-						</div>
-						
-					</form>
-
-					</div>
-					<div id="my_article" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: aqua;">
-						<div class="media" ><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-						</div>
-					</div>
-
-					<div id="my_msg" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: orange;">
-						<div class="media" ><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-						</div>
-
-					</div>
-					<div id="my_collection" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: bisque;">
-						<div class="media" ><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-						</div>
-
-					</div>
-					<div id="my_fans" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: greenyellow;">
-						<div class="media" ><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-						</div>
-
-					</div>
-					<div id="my_sub" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: red;">
-						<div class="media" ><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-							</div>
-							<div class="media"><p>这是一个信息</p>
-							<span>发布于 2022年1月24日</span>
-						</div>
-
-					</div>
-					<div id="my_data" class="col-lg-push-1 col-lg-8 tab-pane fade" style="background-color: purple;">
-						<div>
-							<ul class="form-group">
-								<li class="">
-									<p>头像</p>									
-								</li>
-								
-								<li class="input-group">
-									 <span class="input-group-addon">用户名</span>
-									 <input id="admin_name" type="text" name="admin_name" class="form-control"/>
-								</li>	
-																		
-								<li class="input-group">
-									<span class="input-group-addon">姓名</span>
-									<input id="real_name" type="text" name="real_name" class="form-control"/>
-								</li>													
-								<li class="input-group">
-									<span class="input-group-addon">性别</span>
-									<input id="gender" name="gender" type="text" class="form-control"/>
-								</li>													
-								<li class="input-group">
-									<span class="input-group-addon">所在地</span>
-									<input id="now_path"  type="text" name="now_path" class="form-control"/>
-								</li>
-								<li class="input-group">
-									<span class="input-group-addon">爱好</span>
-									<input id="hobby" type="text" name="hobby" class="form-control"/>
-								</li>
-							</ul>
-						</div>
-
-					</div>
-					</div>
-				
-			</div>
-		</div>
+</div>
 
 
-		<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-		<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-		<script th:src="@{/plugin/jquery/jquery.js}"></script>
-		<script th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
-		 
-		<script th:src="@{https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js}"></script>
-		
-<!--			 富文本编辑器 -->
-		 <script type="text/javascript">
-		 	const E = window.wangEditor
-		 	const editor = new E("#toolbar-container", "#text-container")
-		 	// 或者 const editor = new E(document.getElementById('div1'))
-		 	editor.create()
-		 	
-		 	$("#submit_btn").click(
-			
-		 	function(){
-				var xhr = new XMLHttpRequest();
-				xhr.open("POST",
-						"/dataSubmit?article_text="+encodeURI(JSON.stringify(editor.txt.getJSON()) ) +"&article_name="+encodeURI($("#text_title").val()+"&comment_id="+"&summary=")
-						,true);
-					xhr.send(null);
-				xhr.onreadystatechange=function (){
-					console.log()
-					var start_time  , end_time;
-					if(xhr.readyState==1){
-						start_time = new Date().getTime();
-					}
+<div class="container main-body">
+    <div class="row clearfix  " style="margin-top: 50px ;">
+        <div class="col-lg-3 col-md-2 col-sm-3 col-3 side-bar" style="">
+            <ul class="nav  nav-tabs flex-column " role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#write_article" data-bs-toggle="tab">文章发布</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#my_article" data-bs-toggle="tab">我的博客</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#my_data" data-bs-toggle="tab">个人资料</a>
+                </li>
+            </ul>
+        </div>
 
-					if(xhr.readyState==4){
-						end_time = new Date().getTime();
+        <div class="tab-content col-lg-9 col-md-8 col-sm-7 col-8 offset-md-1 offset-lg-0">
+            <div id="write_article" class="tab-pane  active fade " style="opacity:0.8">
+                <form id="send_article">
+                    <div class="form-group">
+                        <div style="text-align: center;"><p class="article-text-css">标题</p>
+                            <textarea class="form-control" style="width: 100%;" id="text_title" placeholder="想个好题目吧.."></textarea>
+                        </div>
+                        <div style="">
+                            <div id="toolbar-container" class="toolbar"></div>
+                            <div id="text-container" class="text"></div>
+                            <div class="text-center">
+                                <input id="submit_btn"
+                                       class="btn btn-success"
+                                       type="button"
+                                       value="提交"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="my_article" class="tab-pane fade"  >
+                <div id="articleList" class="article-list-style" th:insert="frag/centerFrag::rightBody">
+                </div>
+                <ul id="pagination" class="pagination-sm">
+                </ul>
+            </div>
+            <div id="my_data" class=" tab-pane fade ">
+                <div class="col-lg-9 my-data">
+                    <div class="col-lg-12 container">
+                        <div class="row offset-lg-4">
+                            <form id="user-form" method="post" action="">
+                                <table style="width: 600px" class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>信息</th>
+                                    </tr>
 
-					}
-					console.log(end_time-start_time);
-					if(xhr.status!=200){
+                                    </thead>
+                                    <tbody class="text-center">
+                                    <tr
+                                            class="father">
+                                        <td>
+                                            <label>头像</label>
+                                        </td>
+                                        <td>
+                                            <div >
+                                                <input type="image" style="width: 106px ;height: 94px"
+                                                       class="user-logo" data-bs-target="#logo-modal"
+                                                       data-bs-toggle="modal"
+                                                       th:src="${'/blog/images/'+session.userLogo.get('canvas')+'?random='+(new java.util.Date().getTime())}">
+                                            </div>
+                                        </td>
+                                        <td class="wrong-msg"></td>
+                                    </tr>
+                                    <tr class="father">
+                                        <td>
+                                            <label>用户名</label>
+                                        </td>
+                                        <td>
+                                            <input id="user_name" name="user_name" type="text"
+                                                   th:value="${session.user.getUser_name()}"/>
+                                        </td>
+                                        <td class="wrong-msg"></td>
+                                    </tr>
+                                    <tr class="father">
+                                        <td>
+                                            <label>姓名</label>
+                                        </td>
+                                        <td>
+                                            <input id="real_name" name="real_name" type="text"
+                                                   th:value="${session.user.getReal_name()}"/>
+                                        </td>
+                                        <td class="wrong-msg"></td>
+                                    </tr>
+                                    <tr class="father">
+                                        <td>
+                                            <label>性别</label>
+                                        </td>
+                                        <td>
+                                            <label>男</label> <input id="one" name="gender" th:value="1"
+                                                                    th:checked="${session.user.getGender()=='1'}"
+                                                                    type="radio"/>
+                                            <label>女</label> <input id="two" name="gender" th:value="2"
+                                                                    th:checked="${session.user.getGender()=='2'}"
+                                                                    type="radio"/>
+                                            <label>私密</label> <input id="three" name="gender" th:value="3"
+                                                                     th:checked="${session.user.getGender()=='3'}"
+                                                                     type="radio"/>
+                                        </td>
+                                        <td class="wrong-msg"></td>
+                                    </tr>
+                                    <tr class="father">
+                                        <td>
+                                            <label>现居地</label>
+                                        </td>
+                                        <td>
+                                            <div id="distpicker" data-toggle="distpicker">
+                                                <div>
+                                                    <select name="province" id="province"></select>
+                                                </div>
+                                                <div>
+                                                    <select name="city" id="city"></select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="wrong-msg"></td>
+                                    </tr>
+                                    <tr class="father">
+                                        <td>
+                                            <label>爱好</label>
+                                        </td>
+                                        <td>
+                                            <input name="hobby" type="text"/>
+                                        </td>
+                                        <td class="wrong-msg"></td>
+                                    </tr>
+                                    <tr class="father">
+                                        <td>
+                                            <label>学校</label>
+                                        </td>
+                                        <td>
+                                            <input name="school" type="text"/>
+                                        </td>
+                                        <td class="wrong-msg"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+
+                        </div>
+                        <button id="form-btn" type="submit" class="offset-lg-7 btn btn-success">提交</button>
+                    </div>
 
 
+                </div>
+            </div>
+        </div>
 
-						console.log("提交出错")
-
-					}else
-					{
-						console.log($("#text_title").val())
-					}
-				}
-
-		 	
-		 	});
-
-			 // 自定义提交
+    </div>
+</div>
 
 
-		 </script>
-	</body>
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script th:src="@{/static/plugin/jquery/jquery.js}"></script>
+<!--jquery表单验证-->
+<script th:src="@{http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+<script th:src="@{/static/plugin/bootstrap/js/bootstrap.js}"></script>
+<script th:src="@{/static/plugin/distpicker/distpicker.js}"></script>
+<script th:src="@{/static/plugin/cropper/cropper.js}"></script>
+<script th:src="@{/static/plugin/highlight/highlight.min.js}"></script>
+<script th:src="@{/static/plugin/canvas2images/canvas2image.js}"></script>
+<script th:src="@{/static/plugin/wangEditor/dist/wangEditor.js}"></script>
+<script th:src="@{/static/blogResource/js/divAnimate.js}"></script>
+<script th:src="@{/static/blogResource/js/wangEditorConfig.js}"></script>
+<script th:src="@{/static/blogResource/js/header-script.js}"></script>
+<script th:src="@{/static/blogResource/js/jquery.twbsPagination.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+
+    $("#submit_btn").click(
+        function () {
+            $.ajax({
+                method:"post",
+                url:"/blog/dataSubmit",
+                data:{
+                    "article_text":JSON.stringify(editor.txt.getJSON()) ,
+                    "article_name": $("#text_title").val(),
+                    "summary": editor.txt.text().substring(1,200)
+                },
+                success:function (data){
+                    console.log(data);
+                }
+
+            })
+        });
+
+    // 自定义提交
+    //jquery表单提交
+    $.validator.setDefaults({
+        submitHandler: function () {
+            console.log("提交事件!");
+        }
+    });
+    // 在键盘按下并释放及提交后验证提交表单
+    $().ready(function () {
+
+        $("#user-form").validate({
+            errorPlacement: function (error, element) {
+                $(element).next().css("color", "red")
+                $(element).parents(".father").children(".wrong-msg").html(error)
+                error.appendTo();
+                // console.log( $(element).parents())
+
+            },
+            rules: {
+                user_name: {
+                    required: true,
+                    minlength: 2
+                },
+                real_name: {
+                    required: true,
+                    minlength: 2
+                },
+                school: {
+                    minlength: 3
+                }
+
+            },
+            messages: {
+                user_name: {
+                    required: "请输入用户名",
+                    minlength: "用户名必需由两个字符组成"
+                },
+                real_name: {
+                    minlength: "用户名必需由两个字符组成"
+                },
+                school: {
+                    minlength: "字符数必须大于三个"
+                },
+            }
+        });
+
+    });
+    //初始化distpicker
+    //     var json;
+    $().distpicker({autoSelect: true});
+    //cropper 图片裁剪
+    let isChange = false;
+    let target = document.querySelector('#target');
+    let cropper;
+    let canvasData;
+    let mainData;
+    let imgMsg = [[${session.userLogo.get("mainBody")}]]
+    let extension = "image/"+imgMsg.substring(imgMsg.lastIndexOf(".")+1);
+
+    $("#logo-modal").on('shown.bs.modal', function () {
+        cropper = new Cropper(target,
+            {
+                movable: false,
+                rotatable: false,
+                zoomable: false,
+                zoomOnWheel: false,
+                viewMode: 1,
+                aspectRatio: 1,
+                cropBoxResizable: false,
+                preview: ".clone-img",
+                crop: function (data) {
+                },
+                ready(event) {
+                    let element = cropper.getCroppedCanvas({
+                        imageSmoothingQuality: "high",
+                        height: 200,
+                        width: 200,
+                        maxWidth: 4096,
+                        maxHeight: 4096,
+                        minWidth: 50,
+                        minHeight: 50,
+                        fillColor: '#fff',
+                    });
+                    //不支持动态图片
+                    canvasData = element.toDataURL(extension);
+                },
+                cropend(event) {
+                    let element = cropper.getCroppedCanvas({
+                        imageSmoothingQuality: "high",
+                        height: 200,
+                        width: 200,
+                        maxWidth: 4096,
+                        maxHeight: 4096,
+                        minWidth: 50,
+                        minHeight: 50,
+                        fillColor: '#fff',
+                    });
+                   canvasData = element.toDataURL(extension);
+                    isChange=true;
+
+                }
+            }
+        )//   Cropper new end
+        //function body
+
+    }).on('hidden.bs.modal', function () {
+        cropper.destroy();
+    })
+    //listen end
+
+    // click e start
+    const upload = document.getElementById("upload")
+    const upload_btn = document.getElementById("upload_btn")
+
+    upload_btn.onclick = function () {
+        upload.click();
+    }
+    //图片重定向
+    var done = function (url) {
+        upload.value = '';
+        cropper.replace(url);
+    }
+
+    //更改图像
+    upload.addEventListener('change', function (e) {
+        console.log('进入函数')
+        const file =  upload.files[0];
+        done(getObjectUrl(file));
+        canvasData = "image/"+file.name.substring(file.name.lastIndexOf(".")+1)
+        blobToBase64(file);
+        isChange = true;
+    })
+    //blobToBase64
+    function  blobToBase64(file) {
+        var f = new FileReader();
+        f.onloadend = function (){
+           mainData = this.result;
+        }
+       f.readAsDataURL(file);
+    }
+    //getObjectUrl
+    function getObjectUrl(file){
+        var url = null;
+        if(window.createObjectURL!=undefined){
+        url = window.createObjectURL(file);
+
+        }else if(window.URL!=undefined){
+            url = window.URL.createObjectURL(file) ;
+        }else if(window.webkitURL!=undefined){
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url;
+    }
+    //监听结束
+    $("#canvas_sub").click(function () {
+
+        if(mainData ==undefined)
+        {
+            mainData = Canvas2Image.convertToImage(target).src;
+
+
+        }
+        if (isChange) {
+            $.ajax(
+                {
+                    method: 'POST',
+                    url: '/canvasHandle',
+                    data: {
+                        'isChange': true,
+                        'canvasData':canvasData,
+                        'mainData':  mainData,
+                        'extension':"."+extension.substring(extension.lastIndexOf("/")+1)
+                    },
+                    dataType: "json",
+                    success :function (data){
+                        if(data["token"]=="null"){
+                            alert("图片未裁剪!")
+                        }else{
+                            localStorage.setItem("token",data);
+                                location.reload();
+                        }
+                        //更新token令牌
+                    },
+                    returnType:"json"
+                }
+            )
+
+        } else {
+            $.ajax(
+                {
+                    method: 'POST',
+                    url: '/canvasHandle',
+                    data: {
+                        'isChange': false,
+                        'canvasData': null,
+                        'mainData':  null,
+                        'extension':null,
+                    },
+                    dataType:"text",
+                    success:function(){
+                        alert("图片未裁剪!");
+                    }
+
+                }
+            )
+        }
+
+    }
+    );
+ // function  end
+// 底层图片转base64方法
+// function image2Base64(img){
+// let canvas = document.createElement("canvas");
+//     canvas.width = img.width;
+//     canvas.height=img.height;
+//     canvas.getContext("2d").drawImage(img,0,0,img.width,img.height);
+//     return canvas.toDataURL("image/" + img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase());
+// }
+    $("#pagination").twbsPagination({
+        totalPages:([[${article_num}]]%4)==0 ?[[${article_num}]]/4: [[${article_num}]]/4+1 ,
+        visiblePages: 3,
+        last:"最后页",
+        prev:"上一页",
+        next:"下一页",
+        first:"第一页",
+        onPageClick: function (event, page) {
+            $.ajax({
+                url:"/blog/updateArticleList",
+                method:"post",
+                data:{
+                    "pageIndex":(page-1)*4,
+                },
+                success:function (data){
+                     $("#rightBody").html(data);
+                },
+
+
+            })
+        }
+    })
+</script>
+</body>
 </html>

@@ -1,11 +1,11 @@
-package com.ypf.pojo;
+package com.ypf.entity;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class articleList {
+public class articleEntity {
     private  String article_id;
     private  String article_name;
     private  String article_text;

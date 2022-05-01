@@ -4,15 +4,100 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body>
-<div th:fragement="login_div">
-    <div class="text-end">
-        <button type="button"  onclick="window.location.href='/blog/loginUser'" class="btn btn-outline-light me-2">登录</button>
-        <button type="button" onclick="window.location.href='/blog/registerUser'"  class="btn btn-warning">注册</button>
-    </div>
-</div>
-<div th:fragement="logo_div">
+
+<div th:fragment="login-div">
+    <header class="box-shadow-css header-nav">
+            <div class="">
+                <div class="current-location">
+                    <span th:text="'所在地: '+${session.weatherMsg.get('currentLocation')}"></span>
+                    <span th:text="'最近更新时间:'+${session.weatherMsg.get('update_time')+'时'}"></span>
+
+                </div>
+                <div class="weather-div">
+                    <span th:text="'平均温度:'+${session.weatherMsg.get('temperature')+'℃'}"></span>
+                    <span th:text="'最低温度:'+${session.weatherMsg.get('dew_temperature')+'℃'}"></span>
+                    <span th:text="'天气:'+${session.weatherMsg.get('weather_day')}"></span>
+                </div>
+            </div>
+
+            <div class=" search-div">
+                <input type="search" class="form-control form-control-dark " placeholder="搜索..."
+                       aria-label="Search">
+            </div>
+            <div class="text-end d-inline" style="position:relative ;margin: 0px;left: 10%;top: 20%">
+                <button type="button" onclick="window.location.href='/blog/loginUser'" class="btn btn-outline-light me-2">登录
+                </button>
+                <button type="button" onclick="window.location.href='/blog/registerUser'" class="btn btn-outline-light me-2">注册</button>
+            </div>
+
+    </header>
 
 </div>
+<div th:fragment="logo-div">
+    <header class="box-shadow-css header-nav">
+        <div class="">
+            <div class="">
+                <div class="current-location">
+                    <span th:text="'所在地: '+${session.weatherMsg!=null? session.weatherMsg.get('currentLocation'):'地区获取失败'}"></span>
+                    <span th:text="'最近更新时间:'+${session.weatherMsg!=null? (session.weatherMsg.get('update_time')+'时'):'地区获取失败'}"></span>
+
+                </div>
+                <div class="weather-div">
+                    <span th:text="'平均温度:'+${session.weatherMsg !=null? (session.weatherMsg.get('temperature')+'℃'):'地区获取失败'}"></span>
+                    <span th:text="'最低温度:'+${session.weatherMsg !=null?(session.weatherMsg.get('dew_temperature')+'℃'):'地区获取失败'}"></span>
+                    <span th:text="'天气:'+${session.weatherMsg !=null?(session.weatherMsg.get('weather_day')):'地区获取失败'}"></span>
+                </div>
+            </div>
+
+            <div class=" search-div">
+                <input type="search" class="form-control form-control-dark " placeholder="搜索..."
+                       aria-label="Search">
+            </div>
+            <div id="div-append"
+                 class="float-fram position-relative"
+            >
+                <!--                    <div style="width: 50px ; height: 50px;background-color: #0f5132"></div>-->
+                <img id="user-logo" alt="个人中心" class="img-response rounded-circle  "
+                     th:src="${'/blog/images/'+T(com.ypf.utils.stringUtils).jsonToMap(session.user.getLogo()).get('canvas')+'?random='+(new java.util.Date().getTime())}">
+                <div id="logo-fram" style="display: none" th:insert="frag/header::float-div">
+
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+<div th:fragment="float-div" class="relative-div  bg-white " style="">
+    <span style="z-index: 5"><a th:href="@{/blog/logout}"
+                                style="z-index: 5;color: #fc7769;text-decoration: none">注销账号</a></span>
+    <ul class="btn-toggle-nav list-unstyled "
+        style="width: 200px ; margin-top: 50px">
+        <li class="d-flex btn justify-content-center list-group-item list-group-item-action py-3 lh-tight"><a
+                th:href="@{/blog/write}" class="link-dark rounded text-decoration-none d-block text-center"
+                style="width: 200px">新增文章</a></li>
+        <li class="d-flex btn  justify-content-center list-group-item list-group-item-action py-3 lh-tight"><a
+                th:href="@{/blog/userCenter}" class="link-dark rounded text-decoration-none d-block text-center"
+                style="width: 200px"> 个人中心</a></li>
+        <li class="d-flex btn justify-content-center list-group-item list-group-item-action py-3 lh-tight"><a href="#"
+                                                                                                              class="link-dark rounded text-decoration-none d-block text-center"
+                                                                                                              style="width: 200px">内容管理</a>
+        </li>
+        <li class="d-flex btn justify-content-center list-group-item list-group-item-action py-3 lh-tight"><a href="#"
+                                                                                                              class="link-dark rounded text-decoration-none d-block text-center"
+                                                                                                              style="width: 200px">学习平台</a>
+        </li>
+        <li class="d-flex btn justify-content-center list-group-item list-group-item-action py-3 lh-tight"><a href="#"
+                                                                                                              class="link-dark rounded text-decoration-none d-block text-center"
+                                                                                                              style="width: 200px">我的认证</a>
+        </li>
+        <li class="d-flex btn justify-content-center list-group-item list-group-item-action py-3 lh-tight"><a href="#"
+                                                                                                              class="link-dark rounded text-decoration-none d-block text-center"
+                                                                                                              style="width: 200px">资源分享</a>
+        </li>
+
+    </ul>
+</div>
+
 </body>
 </html>

@@ -1,15 +1,21 @@
 package com.ypf.utils;
 
+import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 public class jwtToken {
@@ -24,7 +30,7 @@ public class jwtToken {
     /**
      * JWT生成Token.<br/>
      * JWT构成: header, payload, signature
-     * @param user_id
+    * @param user_id
      *	 登录成功后用户user_id, 参数user_id不可传空
      */
     public static String createToken(String userJson) throws Exception {
@@ -77,6 +83,27 @@ public class jwtToken {
             // token 校验失败, 抛出Token验证非法异常
         }
         return AesEncryption.desencrypt(userClaim.asString());
+    }
+    public  static  boolean updateToken(HttpServletRequest request , HttpServletResponse response,String tokenName,Object object){
+        //                生成jwtToken并写入浏览器
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = "";
+        PrintWriter out = null;
+        try {
+            json = objectMapper.writeValueAsString(object);
+            response.setContentType("text/html;charset=UTF-8");
+
+            out= response.getWriter();
+
+            out.write("<script>window.localStorage.setItem("+tokenName+",'" + jwtToken.createToken(json) + "')</script>");
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }finally {
+            out.close();
+        }
+        return true;
     }
 
 

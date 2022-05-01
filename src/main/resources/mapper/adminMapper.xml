@@ -3,29 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ypf.dao.adminListMapper">
-    <resultMap id="BaseResultMap" type="com.ypf.pojo.adminList">
-        <id column="admin_id" jdbcType="INTEGER" property="admin_id" />
-        <result column="admin_name" jdbcType="VARCHAR" property="admin_name" />
-        <result column="admin_pwd" jdbcType="VARCHAR" property="admin_pwd" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
-        <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+<mapper namespace="com.ypf.dao.adminMapper">
+    <resultMap id="BaseResultMap" type="com.ypf.entity.adminEntity">
+        <id column="aid" jdbcType="INTEGER" property="admin_id" />
+        <result column="aname" jdbcType="VARCHAR" property="admin_name" />
+        <result column="actime" jdbcType="TIMESTAMP" property="create_time" />
+        <result column="autime" jdbcType="TIMESTAMP" property="update_time" />
     </resultMap>
     <sql id="Base_Column_List">
-        admin_id, admin_name, admin_pwd, create_time, update_time
+        admin_id, admin_name, create_time, update_time
     </sql>
     <select id="login" parameterType="string" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"></include>
-        from MyBlog.admin where  admin_name = #{admin_name} and user_pwd = #{admin_pwd};
+            admin_id aid, admin_name aname, create_time actime, update_time autime
+        from myblog.admin a  where  a.admin_name = #{admin_name} and a.admin_pwd = #{admin_pwd};
     </select>
     <select id="findAdmin" parameterType="string" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"></include>
-        from MyBlog.admin where  admin_name = #{admin_name} ;
+        from myblog.admin where  admin_name = #{admin_name} ;
     </select>
 
-<insert id="addAdmin" parameterType="com.ypf.pojo.adminList">
+<insert id="addAdmin" parameterType="com.ypf.entity.adminEntity">
     insert into myblog.admin (user_name,user_pwd,phone,create_time,update_time) values(#{user_name},#{user_pwd},#{phone},now(),now())
 </insert>
 

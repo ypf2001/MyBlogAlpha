@@ -1,6 +1,6 @@
 package com.ypf.controller.admin;
 
-import com.ypf.pojo.adminList;
+import com.ypf.entity.adminEntity;
 import com.ypf.service.adminService;
 import com.ypf.utils.MD5Utils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class adminController {
     @Resource
     private adminService adminService;
 
@@ -24,8 +24,6 @@ public class AdminController {
      *
      * @return
      * */
-
-
     /*
      *
      * @return
@@ -48,21 +46,23 @@ public class AdminController {
 
         }
         if(StringUtils.isEmpty(verifyCode)||!verifyCode.equals(session.getAttribute("verifyCode")+"")){
-
             session.setAttribute("errorMessage", "验证码错误");
             return "admin/login";
         }
-        adminList adminList = adminService.login(admin_name, admin_pwd);
-        if (adminList != null) {
-            String  md5Pwd = MD5Utils.MD5Encode(admin_pwd,"utf-8");
-            session.setAttribute("admin_name", adminList.getAdmin_name());
-            session.setAttribute("userPwd",md5Pwd);
-            return "redirect:/admin/index";
+        adminEntity adminEntity = adminService.login(admin_name, admin_pwd);
+        System.out.println("123:"+adminEntity);
+        if (adminEntity != null) {
+            session.setAttribute("admin_name", adminEntity.getAdmin_name());
+            return "redirect:/admin/adminIndex";
         } else {
             session.setAttribute("errorMessage", "登录失败");
             return "admin/login";
         }
 
+    }
+    @GetMapping("/adminIndex")
+    public String adminIndex(){
+        return "admin/adminIndex";
     }
     @GetMapping({"/register"})
     public  String register(){
@@ -86,15 +86,11 @@ public class AdminController {
        PrintWriter out= response.getWriter();
        if(adminService.findAdmin(admin_name)==null){
             out.print("false");
-
        }else{
            out.print("true");
-
        }
        out.flush();
        out.close();
         return "admin/register";
     }
-
-
 }

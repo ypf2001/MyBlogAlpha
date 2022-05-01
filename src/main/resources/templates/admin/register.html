@@ -10,37 +10,21 @@
     <link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap-theme.css}"/>
     <link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap-select.min.css}"/>
 </head>
+<style>
+    li{text-align: center;margin-top: 30px}
+    li input{
+        margin: auto;
+    }
+    li span{
+        display: inline-block;
+        align-self: center;
+    }
+</style>
 <body>
 
 <div>
-    <header class="p-3 bg-dark text-white">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-                </a>
-
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">About</a></li>
-                </ul>
-
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                    <input type="search" class="form-control form-control-dark" placeholder="搜索..." aria-label="Search">
-                </form>
-
-                <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2">登录</button>
-                    <button type="button" class="btn btn-warning">注册</button>
-                </div>
-            </div>
-        </div>
-    </header>
     <div class="container " style=" margin:auto ">
-        <div class="col-lg-5 col-md-6 col-sm-6 col-xs-7 center-block  " style=" margin-top: 60px; float: none;">
+        <div class="col-lg-5 col-md-6 col-sm-6 col-xs-7 center-block m-auto  " style=" margin-top: 60px; float: none;">
             <form th:action="@{/admin/login}" method="post">
                 <ul class="form-group ">
                     <li class="list-unstyled " style="margin: 0 auto">
@@ -49,33 +33,33 @@
                         </div>
                     </li>
                     <li class="input-group list-unstyled" style="margin: 0 auto;">
-                        <div class=" img-responsive">
-                            <img title="logo" width="240px" height="180px" src="/blog/img/test.jpg"/>
+                        <div class=" img-responsive m-auto">
+                            <img title="logo" width="240px" height="180px" src="/static/blogResource/img/test.jpg"/>
                         </div>
                     </li>
                     <li class="input-group list-unstyled">
-                        <span class="input-group-addon">用户名</span>
+                        <span class="input-group-addon">用户名:&nbsp;&nbsp;</span>
                         <input id="admin_name" type="text" name="admin_name" class="form-control"/>
                     </li>
-                    <li class="input-group  list-unstyled" style="text-align: center">
-                        <span class="input-group-addon">密码</span>
+                    <li class="input-group  list-unstyled">
+                        <span class="input-group-addon">密&nbsp;&nbsp;&nbsp;码:&nbsp;&nbsp;</span>
                         <input id="admin_pwd" type="password" name="admin_pwd" class="form-control"/>
                     </li>
                     <li class="input-group list-unstyled" >
                         <span class="input-group-addon">
-                        <select class="selectpicker" data-style="btn-info"data-width="100px">
+                        <select class="" data-style="btn-info"data-width="100px">
                             <option>手机号</option>
                             <option>电子邮箱</option>
-                        </select>
+                        </select>&nbsp;&nbsp;
                         </span>
-                        <input id="phone" type="text" name="phone" class="form-control" style="height: 50px"/>
+                        <input id="phone" type="text" name="phone" class="form-control" style="height: 50px"/>&nbsp;&nbsp;
                         <span class="input-group-addon btn btn-default ">获取验证码</span>
                     </li>
                     <li class="input-group list-unstyled">
-                        <span class="input-group-addon">验证码</span>
+                        <span class="input-group-addon">验证码:&nbsp;&nbsp;</span>
                         <input id="verify_code" type="text" name="verify_code" class="form-control"/>
                     </li>
-                    <li class="input-group  list-unstyled" style="margin: auto">
+                    <li class="input-group  list-unstyled" style="margin-top: 10px">
                         <input id="submit_btn" type="button" class="btn btn-default" value="点击注册"/>
                     </li>
                 </ul>
@@ -91,6 +75,9 @@
 <script th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
 <script th:src="@{/plugin/bootstrap/js/bootstrap-select.js}"></script>
 <script th:inline="javascript">
+    $(function (){
+        $(".btn").css("background-color","#cf5bd7")
+    })
     var flag = false;
     var isRepeat = false;
     $("input").bind("input propertychange",
@@ -151,7 +138,6 @@
                     $.post(
                         '/admin/register',
                         $("form").serialize(),
-
                         function (data) {
                         }
                     )

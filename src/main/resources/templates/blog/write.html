@@ -1,10 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="utf-8"/>
+    <title>新增文章</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="styleSheet" th:href="@{/static/plugin/bootstrap/css/bootstrap.css}"/>
+    <!--    <link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap-theme.css}"/>-->
+    <link type="text/css" rel="styleSheet" th:href="@{/static/plugin/highlight/styles/base16/heetch-dark.min.css}"/>
+    <!--   markdown编辑器-->
+    <link type="text/css" rel="stylesheet" th:href="@{/static/plugin/editor.md/css/editormd.min.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{/static/blogResource/css/header-style.css}"/>
 </head>
+<style>
+    body {
+        background-image: url("/static/blogResource/img/writeBG.jpg");
+        -moz-background-size: 100%;
+        background-size: 100%;
+    }
+    .modal-fram{
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 999;
+        background-color: rgba(242,242,242,0.5);
+        -webkit-user-select: none;
+        user-select: none;
+        -moz-user-select: none;
+    }
+    .loading-text{
+        position: relative;
+        left:50%;
+        top: 12%;
+        z-index: 9999;
+        opacity: 1;
+    }
+    .loading-img{
+
+        position: relative;
+        overflow: hidden;
+        left:50%;
+        top: 10%;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        z-index: 99;
+        opacity: 1;
+    }
+    #editor{
+        margin-top: 20px;
+        opacity: 0.8;
+        background-color: white;
+    }
+    .text-title-css{
+        font-size: 30px;
+        font-family:write-font-style ;
+        color: #bbbbbb;
+    }
+    .text-title-css input{
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        border-bottom: 2px solid #ffe300;
+        background-color: transparent;
+        height: 50px;
+        font-size: 35px;
+        outline: none;
+    }
+    .quit{
+        position: absolute;
+        font-family: 幼圆;
+        font-size: 20px;
+        top: 5%;
+        left: 5%;
+
+    }
+    .quit a{
+        text-decoration: none;
+    }
+    @font-face {
+    font-family: "write-font-style";
+        src: url("/static/blogResource/css/fontCss/ChaoZiSheMiaoXiuCaiJinBangJianFan-Shan(REEJI-CHAO-JinbangGBT-Flash)-2.ttf");
+    }
+</style>
 <body>
-$END$
+<div class="quit">
+    <a th:href="@{/blog/userCenter}">返回</a>
+</div>
+<div class="modal-fram">
+    <div class="loading-img" >
+        <img th:src="@{/static/blogResource/img/Ba7Q.gif}" width="80px" height="80px" alt="loading...">
+    </div>
+<!--    <div class="loading-text">-->
+<!--        <span style="">loading......</span>-->
+<!--    </div>-->
+
+
+</div>
+
+<div class="container">
+    <div class="row " style="margin: 50px auto auto;">
+        <div>
+            <div class="col-6 text-title-css" style="margin: auto">
+                <label>标题</label>
+                <input id="text_title" style="width: 80%" type="text"></input>
+            </div>
+            <div id="editor" class="col-12" style="z-index: 10">
+                <textarea class="editormd-markdown-textarea" style="z-index: 1;display:none;"></textarea>
+                <!-- html textarea 需要开启配置项 saveHTMLToTextarea == true -->
+                <textarea class="editormd-html-textarea" name="$save-code"></textarea>
+            </div>
+            <input name="file" type="file" style="display: none"/>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/static/plugin/jquery/jquery.js}"></script>
+<script th:src="@{/static/plugin/highlight/highlight.min.js}"></script>
+<script th:src="@{/static/plugin/editor.md/editormd.min.js}"></script>
+<script th:src="@{/static/blogResource/js/divAnimate.js}"></script>
+<script th:inline="javascript">
+
+    let editor = null;
+    $(function () {
+            document.getElementById("text_title").value= [[${title}]]!=null||[[${title}]]!==''||[[${title}]]!=undefined ?[[${title}]]:'';
+            editormd.katexURL = {
+                js: " /static/plugin/katex/katex.min",
+                css: "/static/plugin/katex/katex.min"
+            };
+            editor = editormd("editor", {
+                value:[[${content}]]!=null|| [[${content}]]!==''||[[${content}]]!=undefined ? [[${content}]]:'',
+                flowChart: true,
+                height: "600px",
+                width: "100%",
+                saveHTMLToTextarea: true,
+                imageUpload:true,
+                imageFormats:["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL: "/editormdFileUpload",
+                crossDomainUpload : true,
+                path: "/static/plugin/editor.md/lib/",
+                tex: true,
+                codeFold: true,
+                tocm: true,
+                watch: true,
+                emoji: true,
+                flowchart: true,
+                taskList: true,
+                sequenceDiagram: true,
+                //dialogLockScreen : false,   // 设置弹出层对话框不锁屏，全局通用，默认为true
+                //dialogShowMask : false,     // 设置弹出层对话框显示透明遮罩层，全局通用，默认为true
+                //dialogDraggable : false,    // 设置弹出层对话框不可拖动，全局通用，默认为true
+                //dialogMaskOpacity : 0.4,    // 设置透明遮罩层的透明度，全局通用，默认值为0.1
+                //dialogMaskBgColor : "#000", // 设置透明遮罩层的背景颜色，全局通用，默认为#fff
+                toolbarIcons: function () {
+                    return ["undo", "redo", "|", "bold", "hr", "code-block","emoji","datetime","image","table","|","clear" ,"preview", "watch", "|", "fullscreen", "info","|","","", "||", "submit"]
+                },
+                toolbarCustomIcons: {
+                    submit: "<input id='btn-click' type='button'  class='btn btn-success' value='保存'/>"
+                },
+                toolbarHandlers: {},
+                onload: function () {
+                    $("#btn-click").click(
+
+                        function () {
+                            if([[${article_id}]]){
+                                $.ajax({
+                                    method: "post",
+                                    url: "/updateArticle",
+                                    data: {
+                                        "article_text": editor.getMarkdown(),
+                                        "article_name": $("#text_title").val(),
+                                        "summary": editor.getPreviewedHTML().replace(/<.*?>/ig, "").replace().substr(0, 200),
+                                        "article_id":[[${article_id}]]
+                                    },
+                                    beforeSend:function (){
+                                        $(".modal-fram").css("display","block")
+                                    },
+                                    dataType:"json",
+                                    success:  function (data) {
+                                        $(".modal-fram").css("display","none");
+                                        if(data['msg']||data['msg']==1||data['msg'].equal('1')){
+                                            location.reload();
+                                            alert("更新成功");
+                                        }else{
+                                            alert("更新失败");
+                                        }
+                                    },
+                                    returnType: "json"
+                                })
+                            }
+                            else{
+                                $.ajax({
+                                    method: "post",
+                                    url: "/dataSubmit",
+                                    data: {
+                                        "article_text": editor.getMarkdown(),
+                                        "article_name": $("#text_title").val(),
+                                        "summary": editor.getPreviewedHTML().replace(/<.*?>/ig, "").replace().substr(0, 200),
+                                    },
+                                    beforeSend:function (){
+                                        $(".modal-fram").css("display","block")
+                                    },
+                                    dataType:"json",
+                                    success:  function (data) {
+                                        $(".modal-fram").css("display","none");
+                                        if(data['msg']||data['msg']==1||data['msg'].equal('1')){
+                                            location.reload();
+                                            alert("上传成功");
+                                        }else{
+                                            alert("上传失败");
+                                        }
+                                    },
+                                    returnType: "json"
+                                })
+                            }
+
+                        }
+                    )
+                }
+            })
+        if( [[${content}]]!=null|| [[${content}]]!=''||[[${content}]]!=undefined){
+
+        }
+        }
+    )
+</script>
 </body>
 </html>

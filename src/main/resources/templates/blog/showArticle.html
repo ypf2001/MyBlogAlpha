@@ -1,10 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>详情页面</title>
+    <link type="text/css" rel="styleSheet" th:href="@{/static/plugin/bootstrap/css/bootstrap.css}"/>
+    <link type="text/css" rel="styleSheet" th:href="@{/static/blogResource/css/showStyle.css}"/>
+    <link type="text/css" rel="styleSheet" th:href="@{/static/plugin/highlight/styles/base16/silk-light.min.css}"/>
 </head>
 <body>
-$END$
+<div class="dialog" style="display: none">
+    <p class="header">请先登录</p>
+    <div class="footer">
+        <button class="cancel" onclick="$('.dialog').fadeOut()">取消</button>
+        <button class="confirm" onclick="location.href='../../static/blogResource/loginUser'">确认</button>
+    </div>
+</div>
+<section>
+    <div class="mainBody container  row offset-md-1 offset-lg-1">
+        <div class="leftArticleBody   col-lg-9 col-md-9 col-12">
+            <div id="doc-content">
+                    <textarea style="display:none;" th:utext="${mainHtml}"></textarea>
+            </div>
+        </div>
+        <div th:id="sidebar" class="side-bar col-lg-3 col-md-3 d-none d-lg-block d-md-block ">
+
+            <!--            判断user是否登录-->
+            <div th:if="${session.user!=null}">
+                <img class="user-logo" onclick="location.href='../../static/blogResource/userCenter'"
+                     th:src="${'/blog/images/'+session.userLogo.get('canvas')+'?random='+(new java.util.Date().getTime())}"
+                     alt="userLogo">
+                <p th:text="${ '欢迎你:'+session.user.getUser_name()}"></p>
+                <span>是否收藏:</span>
+                <ul class="emoji-collect" th:fragment="collectMsg">
+                    <li value="0" class="collect" th:if="${isCollected=='0'}"><img
+                            th:src="@{/static/blogResource/img/pageIcon/collect.png}" alt="collect"></li>
+                    <li value="1" class="collected" th:unless="${isCollected=='0'}"><img
+                            th:src="@{/static/blogResource/img/pageIcon/collected.png}" alt="collected"></li>
+                </ul>
+                <button id="updateBtn">修改文章</button>
+            </div>
+            <div th:unless="${session.user!=null}">
+                <div>
+                    <div><span>游客请先登录!</span></div>
+                    <button onclick="location.href='../../static/blogResource/loginUser'">登录</button>
+                </div>
+            </div>
+            <div>
+                <span>是否推荐:</span>
+                <ul class="emoji-icon">
+                    <li><img th:src="@{/static/blogResource/img/pageIcon/sad-1.png}" alt="非常不推荐"></li>
+                    <li><img th:src="@{/static/blogResource/img/pageIcon/sceptic-5.png}" alt="不推荐"></li>
+                    <li><img th:src="@{/static/blogResource/img/pageIcon/smile.png}" alt="推荐"></li>
+                    <li><img th:src="@{/static/blogResource/img/pageIcon/happy-9.png}" alt="非常推荐"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="comment-area container">
+        <div class="col-11" style="margin: 50px auto auto auto;">
+            <label for="TinyMCE_div" style="font-size: 30px;color: #ff9600">说先什么吧:</label>
+            <textarea id="TinyMCE_div"></textarea>
+            <input id="comment_sub_btn" class="btn" style="margin-top: 10px;margin-left: 50%; background-color: #bfd1ec"
+                   type="button" value="点击提交">
+        </div>
+        <div>
+            <h3>评论区</h3>
+            <div class="">
+                <div class="col-8 m-auto">
+                    <div th:if="${comment_list}==null"
+                         style="width:80%;height: 200px;background-color: #bbbbbb;user-select: none ">
+                        <span style="font-size: 20px;line-height: 200px">暂未评论</span>
+                    </div>
+
+                    <div th:unless="${comment_list}==null">
+                        <div class="comment_item" th:each="comment:${comment_list}">
+                            <div class="comment-header ">
+                            <span>
+                                <img style="width: 50px;height: 50px;display: inline-block;border-radius: 50%;cursor: pointer"
+                                     th:href="${'/blog/userIndex?user_id='+comment.getUser_id()}"
+                                     th:src="${'/blog/images/'+T(com.ypf.utils.stringUtils).jsonToMap(comment.userList.get(0).getLogo()).get('canvas') +'?random='+(new java.util.Date().getTime())}"
+                                     alt="user_logo"/></span>
+                                <a class="comment-user" th:href="${'/blog/userIndex?user_id='+comment.getUser_id()}"
+                                   th:text="${comment.userList.get(0).getUser_name()}"></a>
+                            </div>
+                            <div class="comment_text"
+                                 th:utext="${T(com.ypf.utils.deflaterUtils).unzipString(comment.getComment_text())}">
+                            </div>
+                            <div class="improve-msg">
+                                <span>发表时间</span>
+                                <label th:text="${comment.getCreate_time()}"></label>
+                                <span>
+                            <img class="praiseIcon" style="width: 25px;height: 25px "
+                                 src="/static/blogResource/img/pageIcon/praiseBefore.png"
+                                 alt="reduce"/>
+                            <label th:text="${comment.getPraise()}"></label>
+                            <label style="display: none" th:text="${comment.getComment_id()}"></label>
+                         </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer>
+</footer>
+<script th:src="@{/static/plugin/jquery/jquery.js}"></script>
+<script th:src="@{/static/plugin/tinymce/tinymce.min.js}"></script>
+<script th:src="@{/static/plugin/highlight/highlight.min.js}"></script>
+<script th:src="@{/static/plugin/editor.md/lib/flowchart.min.js}"></script>
+<script th:src="@{/static/plugin/editor.md/lib/jquery.flowchart.min.js}"></script>
+<script th:src="@{/static/plugin/editor.md/lib/marked.min.js}"></script>
+<script th:src="@{/static/plugin/editor.md/lib/prettify.min.js}"></script>
+<script th:src="@{/static/plugin/editor.md/lib/raphael.min.js}"></script>
+<script th:src="@{/static/plugin/editor.md/lib/underscore.min.js}"></script>
+<script th:src="@{/static/plugin/editor.md/editormd.min.js}"></script>
+<script th:src="@{/static/blogResource/js/divAnimate.js}"></script>
+<script th:inline="javascript">
+    <!--    开启highlight语法高亮-->
+    // $(function (){
+    //     console.log([[${mainHtml}]])
+    // })
+    hljs.highlightAll();
+    let editor;
+    let pageNum = window.location.href.substring(window.location.href.lastIndexOf("/") + 1);
+    editor = editormd.markdownToHTML(
+        "doc-content", {
+            htmlDecode: "style,script,iframe",
+            tex: true,
+            emoji: true,
+            flowchart: true,
+            // sequenceDiagram: true, // 默认不解析
+            codeFold: true,
+        }
+    )
+
+    tinymce.init({
+        selector: "#TinyMCE_div",
+        content_style: "img {max-width:100%;}",
+        language_url: "/static/plugin/tinymce/langs/zh_CN.js",
+        language: "zh_CN",
+        statusbar: false,
+    })
+
+    $("#comment_sub_btn").click(function () {
+        if ([[${session.user}]] == null) {
+            $(".dialog").fadeIn();
+        } else {
+            $.ajax({
+                url: "/comment_sub",
+                method: "post",
+                data: {
+                    "comment_text": tinyMCE.activeEditor.getContent(),
+                    "index": pageNum
+                },
+                //设置函数类json格式
+                dataType: "json",
+                success: function (data) {
+                    console.log(data["msg"]);
+                    console.log(data);
+                    location.reload();
+
+                },
+                returnType: "json"
+            })
+        }
+
+
+    })
+    $(".praiseIcon").click(
+        function () {
+            let praiseEle = $(this).next();
+            if ($(this).attr("src") == "/static/blogResource/img/pageIcon/praiseBefore.png") {
+                $(this).attr("src", "/static/blogResource/img/pageIcon/praiseAfter.png");
+                praiseEle.text(parseInt(praiseEle.text()) + 1)
+            } else {
+                $(this).attr("src", "/blog/img/pageIcon/praiseBefore.png");
+                praiseEle.text(parseInt(praiseEle.text()) - 1)
+            }
+            praiseSub(praiseEle.text(), praiseEle.next().text());
+        }
+    )
+
+    function praiseSub(nowNum, comment_id) {
+        $.ajax(
+            {
+                method: "post",
+                url: "/praiseSub",
+                data: {
+                    "praise": nowNum,
+                    "comment_id": comment_id,
+                },
+                dataType: "json",
+                returnType: "json",
+                success(data) {
+                    console.log(data)
+                }
+            }
+        )
+    }
+
+    $(".emoji-collect li").click(
+        function () {
+            let img = $(this).find('img');
+            $.ajax(
+                {
+                    url: "/blog/collectHandle",
+                    method: "post",
+                    data: {
+                        'article_id': location.href.substring(location.href.lastIndexOf('/') + 1),
+                        'isCollected': this.value,
+                    },
+                    returnType: 'json',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data['msg'] == 1) {
+                            if (img.attr("src") == '/static/blogResource/img/pageIcon/collect.png') {
+                                img.attr('src', '/static/blogResource/img/pageIcon/collected.png');
+                            } else {
+                                img.attr('src', '/static/blogResource/img/pageIcon/collect.png');
+                            }
+                        }
+
+
+                    }
+                }
+            )
+        }
+    )
+    $("#updateBtn").click(function () {
+
+        let form  = $("<form id='mainForm' action='/blog/write' method='post'></form>")
+        let tmpInput = $("<input style='display: none' type='text' name='article_id'/>");
+        let content = $("<textarea style='display: none'  name='content'></textarea>")
+        let title = $("<input style='display: none' type='text' name='title'/>")
+        tmpInput.attr("value", pageNum);
+        content.text([[${mainHtml}]]);
+        title.attr("value",[[${title}]]);
+        form.append(tmpInput);
+        form.append(content);
+        form.append(title);
+        form.appendTo("body")
+        form.css('display','none')
+        form.submit();
+    })
+</script>
 </body>
 </html>

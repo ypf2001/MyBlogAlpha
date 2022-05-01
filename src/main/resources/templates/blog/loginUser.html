@@ -5,9 +5,9 @@
     <meta name="author" content="Kodinger">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>My Login Page</title>
-    <link type="text/css" rel="styleSheet" th:href="@{/plugin/bootstrap/css/bootstrap.css}"/>
+    <link type="text/css" rel="styleSheet" th:href="@{/static/plugin/bootstrap/css/bootstrap.css}"/>
     <script th:src="@{/plugin/bootstrap/js/bootstrap.bundle.js}"></script>
-    <link type="text/css" rel="styleSheet" th:href="@{/blog/css/my-login.css}"/>
+    <link type="text/css" rel="styleSheet" th:href="@{/static/blogResource/css/my-login.css}"/>
 </head>
 
 <body class="my-login-page">
@@ -16,15 +16,15 @@
         <div class="row justify-content-md-center h-100">
             <div class="card-wrapper">
                 <div class="brand">
-                    <img th:src="@{/blog/img/logo.jpg}" alt="bootstrap 5 login page">
+                    <img th:src="@{/static/blogResource/img/logo.jpg}" alt="bootstrap 5 login page">
                 </div>
                 <div class="card fat ">
                     <div class="card-body ">
                         <h4 class="card-title">登录</h4>
-                        <form method="POST" class="my-login-validation " novalidate="">
+                        <form method="post" class="my-login-validation " action="/static/blogResource/loginUser" novalidate="">
                             <div class="form-group ">
                                 <label for="email">邮箱地址</label>
-                                <input id="email" type="email" class="form-control"  value="" required autofocus>
+                                <input id="email" type="email" class="form-control"  name="email" value="" required autofocus>
                                 <div class="invalid-feedback">
                                     非法的邮箱
                                 </div>
@@ -36,7 +36,7 @@
                                         忘记密码?
                                     </a>
                                 </label>
-                                <input id="password" type="password" class="form-control"  required data-eye>
+                                <input id="password" type="password"  name="password" class="form-control"  required data-eye>
                                 <div class="invalid-feedback">
                                         需要密码
                                 </div>
@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 <div class="custom-checkbox custom-control">
 <!--                                    <input name="isRemember" type="hidden" value="">-->
-                                    <input type="checkbox" name="" id="remember" value="off"  class="custom-control-input">
+                                    <input type="checkbox" name="isRemember" id="remember" value="off"  class="custom-control-input">
                                     <label for="remember" class="custom-control-label">记住我</label>
                                 </div>
                             </div>
@@ -68,29 +68,33 @@
         </div>
     </div>
 </section>
-<script th:src="@{/plugin/popper/popper.js}"></script>
-<script th:src="@{/plugin/jquery/jquery.js}"></script>
-<script th:src="@{/plugin/bootstrap/js/bootstrap.js}"></script>
-<script th:src="@{/blog/js/my-login.js}"></script>
+<script th:src="@{/static/plugin/popper/popper.js}"></script>
+<script th:src="@{/static/plugin/jquery/jquery.js}"></script>
+<script th:src="@{/static/plugin/bootstrap/js/bootstrap.js}"></script>
+<script th:src="@{/static/blogResource/js/my-login.js}"></script>
 <script>
      token =  localStorage.getItem("token")
-    if(token.length>0||token!=null){
-
-
-
-    }
-
-
-
-
     window.onload= function (){
-        console.log($("#remember").prop("checked"))
-        if(!$("#remember").prop("checked")){
-            $("#remember").val("off")
-            console.log($("#remember").val())
-        }else
-        {
+        if(token!=null){
+            $.ajax({
+                method:"post",
+                url: "/blog/autoLogin",
+                data:{
+                    token:token.toString()
+                },
+                success:function (){
+                    location.href="/";
+                }
+            }
+            )
 
+
+        }else{
+            console.log($("#remember").prop("checked"))
+            if(!$("#remember").prop("checked")){
+                $("#remember").val("off")
+                console.log($("#remember").val())
+            }
         }
 
     }
@@ -102,20 +106,43 @@
             }else
             {
                 $("#remember").val("on");
+                console.log($("#remember").val())
             }
         }
 
-    )
 
-    $("#sub_btn").click(
-        function (){
-            $("form").attr("action",
-                "/blog/login?email="+$("#email").val()+
-                "&password="+$("#password").val()+
-                "&isRemember="+$("#remember").val());
-            $("form").submit()
-        }
     )
+     $("#sub_btn").click(
+         function (){
+             $("#remember").attr("checked","checked");
+             $.ajax({
+                 url: "/blog/login",
+                 method: "post",
+                 data: {
+                     email:$("#email").val(),
+                     password:$("#password").val(),
+                     isRemember:$("#remember").val()
+                 },
+                 returnType:'json',
+                 dataType:'json',
+                 success :function (data){
+                     console.log(data);
+                       if(data!=null){
+                           localStorage.setItem("token", data['token'])
+                           location.href="/";
+                       }
+                       if(data["msg"]=="0"||data["msg"]==0)
+                       {
+                           alert("登录失败!");
+                       }
+                 },
+
+             })
+         }
+
+     );
+
+
 
 
 
